@@ -27,7 +27,6 @@
       background: radial-gradient(1200px 600px at top, #111622 0%, var(--bg) 60%);
       color: var(--text);
       line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
     }
 
     .container {
@@ -39,13 +38,11 @@
     /* HERO */
     .hero {
       display: grid;
-      grid-template-columns: 1fr;
       gap: 32px;
       margin-bottom: 96px;
     }
 
     .badge {
-      display: inline-block;
       padding: 6px 14px;
       font-size: 13px;
       border-radius: 999px;
@@ -88,8 +85,8 @@
     }
 
     .btn.primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(92, 255, 199, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(92, 255, 199, 0.35);
     }
 
     .btn.secondary {
@@ -110,7 +107,6 @@
       font-size: 28px;
       font-weight: 500;
       margin-bottom: 32px;
-      letter-spacing: -0.01em;
     }
 
     /* SERVICES */
@@ -129,7 +125,6 @@
 
     .card h3 {
       font-size: 18px;
-      font-weight: 500;
       margin-bottom: 12px;
     }
 
@@ -146,15 +141,29 @@
     }
 
     .work-item {
+      background: #0f1220;
+      border: 1px solid var(--border);
       border-radius: 18px;
       overflow: hidden;
-      border: 1px solid var(--border);
-      background: #0f1220;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .work-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.45);
     }
 
     .work-thumb {
       height: 200px;
-      background: linear-gradient(135deg, #1a1f33, #0f1220);
+      background: #0f1220;
+      overflow: hidden;
+    }
+
+    .work-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .work-content {
@@ -163,13 +172,12 @@
 
     .work-content h4 {
       font-size: 17px;
-      font-weight: 500;
       margin-bottom: 6px;
     }
 
     .work-content span {
-      color: var(--muted);
       font-size: 14px;
+      color: var(--muted);
     }
 
     /* ABOUT */
@@ -179,7 +187,7 @@
       color: var(--muted);
     }
 
-    /* FOOTER CTA */
+    /* FOOTER */
     .footer {
       border-top: 1px solid var(--border);
       padding-top: 64px;
@@ -188,7 +196,6 @@
 
     .footer h2 {
       font-size: 32px;
-      font-weight: 500;
       margin-bottom: 16px;
     }
 
@@ -197,20 +204,14 @@
       margin-bottom: 28px;
     }
 
-    /* RESPONSIVE */
     @media (max-width: 640px) {
       .container {
         padding: 64px 20px;
       }
-      .hero {
-        margin-bottom: 72px;
-      }
-      .section {
-        margin-bottom: 72px;
-      }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
 
@@ -219,7 +220,7 @@
       <span class="badge">UI/UX Designer • SaaS & eCommerce</span>
       <h1>Designing clear, usable interfaces that are easy to build and easy to use.</h1>
       <p>
-        I design clean UI/UX for SaaS products and eCommerce platforms, with hands-on CMS development experience so designs ship smoothly.
+        I design clean UI/UX for SaaS products and eCommerce platforms, with hands-on CMS development experience.
       </p>
       <div class="cta">
         <a href="#work" class="btn primary">View Work</a>
@@ -233,15 +234,15 @@
       <div class="services">
         <div class="card">
           <h3>UI/UX Design</h3>
-          <p>SaaS dashboards, result pages, flows, typography, and visual hierarchy focused on clarity.</p>
+          <p>SaaS dashboards, result pages, flows, typography, and visual hierarchy.</p>
         </div>
         <div class="card">
           <h3>eCommerce</h3>
-          <p>Product pages, checkout flows, and conversion-focused layouts for real users.</p>
+          <p>Product pages, checkout flows, and conversion-focused layouts.</p>
         </div>
         <div class="card">
           <h3>CMS Development</h3>
-          <p>Shopify, WordPress, and custom CMS implementation with clean handoff.</p>
+          <p>Shopify, WordPress, and clean CMS implementations.</p>
         </div>
       </div>
     </section>
@@ -249,32 +250,35 @@
     <!-- WORK -->
     <section id="work" class="section">
       <h2>Selected Work</h2>
+
       <div class="work-grid">
         <div class="work-item">
           <div class="work-thumb">
-            <img src="s1.png" alt="SaaS Results Page UI" />
+            <img src="s1.png" alt="SaaS Results Page UI">
           </div>
           <div class="work-content">
             <h4>SaaS Results Page</h4>
-            <span>Clear good vs bad performance states</span>
+            <span>Clear performance states</span>
           </div>
         </div>
+
         <div class="work-item">
           <div class="work-thumb">
-            <img src="s2.png" alt="SaaS Results Page UI" />
+            <img src="s2.png" alt="eCommerce Checkout UI">
           </div>
           <div class="work-content">
             <h4>eCommerce Checkout</h4>
-            <span>Simplified flow & improved clarity</span>
+            <span>Simplified flow & clarity</span>
           </div>
         </div>
+
         <div class="work-item">
           <div class="work-thumb">
-            <img src="s3.png" alt="SaaS Results Page UI" />
+            <img src="s3.png" alt="Product Page UI">
           </div>
           <div class="work-content">
             <h4>Product Page UI</h4>
-            <span>Conversion-focused layout redesign</span>
+            <span>Conversion-focused redesign</span>
           </div>
         </div>
       </div>
@@ -284,14 +288,14 @@
     <section class="section">
       <h2>About</h2>
       <p class="about">
-        I’m a UI/UX designer working with SaaS and eCommerce products. Alongside design, I handle CMS-based development, which helps me create solutions that are practical, scalable, and ready to ship.
+        I’m a UI/UX designer focused on SaaS and eCommerce products. I combine design with CMS development to deliver practical, build-ready solutions.
       </p>
     </section>
 
     <!-- FOOTER -->
     <section id="contact" class="footer">
       <h2>Let’s Work Together</h2>
-      <p>Available for small improvements, redesigns, and ongoing UI/UX work.</p>
+      <p>Available for redesigns, improvements, and ongoing UI/UX work.</p>
       <div class="cta" style="justify-content:center;">
         <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
         <a href="https://www.freelancer.com/u/siddhant84" class="btn secondary">Freelancer Profile</a>
