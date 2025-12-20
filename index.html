@@ -4,12 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Siddhant Yadav — UI/UX Designer</title>
+<meta name="description" content="Siddhant Yadav — Minimal, usable UI design for SaaS & eCommerce. Clear process, dev-friendly systems, and calm interfaces." />
 
 <style>
 :root{
   --bg:#0c0f14;
-  --panel:#10141b;
-  --panel-soft:#0e1218;
+  --panel:#0e1218;
   --text:#eef1f6;
   --muted:#9aa2b2;
   --accent:#8eead0;
@@ -18,7 +18,6 @@
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-
 body{
   font-family: Inter, system-ui, sans-serif;
   background:
@@ -27,8 +26,8 @@ body{
     var(--bg);
   color:var(--text);
   line-height:1.6;
+  overflow-x:hidden;
 }
-
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 
@@ -45,8 +44,11 @@ a{text-decoration:none;color:inherit}
   grid-template-columns:1.1fr .9fr;
   gap:64px;
   align-items:center;
-  margin-bottom:120px;
+  margin-bottom:110px;
 }
+
+.hero-left{ display:flex; flex-direction:column; }
+.hero-right{ display:flex; justify-content:center; }
 
 .badge{
   font-size:13px;
@@ -62,7 +64,7 @@ a{text-decoration:none;color:inherit}
   font-weight:600;
   letter-spacing:-.03em;
   line-height:1.1;
-  margin:18px 0;
+  margin:18px 0 14px;
 }
 
 .hero p{
@@ -75,6 +77,7 @@ a{text-decoration:none;color:inherit}
   display:flex;
   gap:14px;
   margin-top:24px;
+  flex-wrap:wrap;
 }
 
 .btn{
@@ -82,6 +85,7 @@ a{text-decoration:none;color:inherit}
   border-radius:14px;
   font-size:15px;
   transition:.25s ease;
+  border:1px solid transparent;
 }
 
 .btn.primary{
@@ -90,17 +94,17 @@ a{text-decoration:none;color:inherit}
   font-weight:500;
 }
 
-.btn.primary:hover{
-  transform:translateY(-2px);
-}
+.btn.primary:hover{ transform:translateY(-2px); }
 
 .btn.secondary{
-  border:1px solid var(--border);
+  border-color:var(--border);
   color:var(--text);
+  background:transparent;
 }
 
 .btn.secondary:hover{
   background:rgba(255,255,255,.03);
+  transform:translateY(-2px);
 }
 
 /* ---------------- PROFILE ---------------- */
@@ -118,15 +122,15 @@ a{text-decoration:none;color:inherit}
   content:"";
   position:absolute;
   inset:-40px;
-  background:radial-gradient(circle, rgba(142,234,208,.25), transparent 60%);
-  filter:blur(40px);
+  background:radial-gradient(circle, rgba(142,234,208,.22), transparent 60%);
+  filter:blur(42px);
   z-index:-1;
   animation:float 12s ease-in-out infinite;
 }
 
 @keyframes float{
   0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-20px)}
+  50%{transform:translateY(-18px)}
 }
 
 .profile img{
@@ -137,38 +141,46 @@ a{text-decoration:none;color:inherit}
 
 /* ---------------- SECTIONS ---------------- */
 
-.section{
-  margin-bottom:120px;
-}
+.section{ margin-bottom:110px; }
 
 .section h2{
   font-size:28px;
   font-weight:500;
-  margin-bottom:28px;
+  margin-bottom:16px;
 }
 
-/* ---------------- SERVICES ---------------- */
+.section-lead{
+  color:var(--muted);
+  margin-bottom:28px;
+  max-width:760px;
+  font-size:16px;
+}
 
-.services{
+/* ---------------- CARDS ---------------- */
+
+.grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
+  gap:22px;
 }
 
 .card{
-  background:var(--panel-soft);
+  background:rgba(255,255,255,.02);
+  border:1px solid var(--border);
   border-radius:20px;
-  padding:28px;
+  padding:24px;
   transition:.35s ease;
 }
 
 .card:hover{
   transform:translateY(-6px);
+  background:rgba(255,255,255,.03);
 }
 
 .card h3{
-  font-size:18px;
-  margin-bottom:10px;
+  font-size:16px;
+  margin-bottom:8px;
+  font-weight:600;
 }
 
 .card p{
@@ -176,34 +188,24 @@ a{text-decoration:none;color:inherit}
   color:var(--muted);
 }
 
-/* ---------------- WORK ---------------- */
+/* ---------------- PROCESS ---------------- */
 
-.work-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:40px;
-}
-
-.work-item{
+.step{
   position:relative;
-}
-
-.work-thumb{
-  position:relative;
-  border-radius:22px;
   padding:24px;
-  background:linear-gradient(180deg, #0f131a, #0c0f14);
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+  border:1px solid var(--border);
   overflow:hidden;
 }
 
-/* soft animated color wash */
-.work-thumb::before{
+.step::before{
   content:"";
   position:absolute;
   inset:-50%;
   background:
-    radial-gradient(circle at 30% 30%, rgba(142,234,208,.18), transparent 40%),
-    radial-gradient(circle at 70% 70%, rgba(170,180,255,.15), transparent 40%);
+    radial-gradient(circle at 30% 30%, rgba(142,234,208,.10), transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(170,180,255,.08), transparent 40%);
   animation:slow-pan 18s linear infinite;
 }
 
@@ -212,32 +214,66 @@ a{text-decoration:none;color:inherit}
   to{transform:translate(80px,60px)}
 }
 
-.work-thumb img{
-  position:relative;
-  z-index:1;
-  width:100%;
-  height:220px;
-  object-fit:contain;
-  transition:.4s ease;
+.step-inner{ position:relative; z-index:1; }
+
+.kicker{
+  font-size:12px;
+  color:rgba(238,241,246,.8);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:10px;
 }
 
-.work-item:hover img{
-  transform:scale(1.04);
-}
-
-.work-content{
-  padding:18px 6px 0;
-}
-
-.work-content h4{
+.step h3{
   font-size:17px;
-  margin-bottom:6px;
+  margin-bottom:8px;
+  font-weight:600;
 }
 
-.work-content span{
+.step p{
+  color:var(--muted);
+  font-size:15px;
+}
+
+.step ul{
+  margin-top:12px;
+  padding-left:18px;
+  color:rgba(154,162,178,.95);
   font-size:14px;
+}
+
+.step li{ margin:6px 0; }
+
+/* ---------------- ABOUT ---------------- */
+
+.about-wrap{
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap:22px;
+  align-items:start;
+}
+
+.about{
+  font-size:16px;
   color:var(--muted);
 }
+
+.about strong{ color:var(--text); font-weight:600; }
+
+.facts{
+  display:grid;
+  gap:12px;
+}
+
+.fact{
+  padding:18px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+}
+
+.fact b{ display:block; font-size:14px; margin-bottom:6px; }
+.fact span{ color:var(--muted); font-size:14px; }
 
 /* ---------------- FOOTER ---------------- */
 
@@ -250,11 +286,13 @@ a{text-decoration:none;color:inherit}
 .footer h2{
   font-size:32px;
   margin-bottom:12px;
+  font-weight:600;
 }
 
 .footer p{
   color:var(--muted);
   margin-bottom:28px;
+  font-size:15px;
 }
 
 /* ---------------- ANIMATIONS ---------------- */
@@ -270,15 +308,23 @@ a{text-decoration:none;color:inherit}
   transform:translateY(0);
 }
 
-/* ---------------- MOBILE ---------------- */
+/* ---------------- MOBILE (PROFILE ON TOP) ---------------- */
 
-@media(max-width:800px){
+@media(max-width:900px){
   .hero{
     grid-template-columns:1fr;
     text-align:center;
+    gap:28px;
   }
-  .badge{margin:auto}
-  .cta{justify-content:center}
+
+  .hero-right{ order:-1; } /* ✅ profile first on mobile */
+
+  .badge{ margin:0 auto; }
+  .cta{ justify-content:center; }
+
+  .about-wrap{
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -288,74 +334,137 @@ a{text-decoration:none;color:inherit}
 
 <!-- HERO -->
 <section class="hero">
-  <div>
+  <div class="hero-left">
     <span class="badge fade">Available for Freelance</span>
+
     <h1 class="fade">Minimal, usable UI design for SaaS & eCommerce products.</h1>
+
     <p class="fade">
-      I design calm, structured interfaces that help users focus — and help teams ship faster.
+      I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.
     </p>
+
     <div class="cta fade">
-      <a href="#work" class="btn primary">View Work</a>
+      <a href="#what" class="btn primary">What I Do</a>
+      <a href="#process" class="btn secondary">How I Work</a>
+      <a href="#about" class="btn secondary">About</a>
       <a href="#contact" class="btn secondary">Contact</a>
     </div>
   </div>
 
-  <div class="profile fade">
-    <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/467779427_3770242173230051_3996428641314189002_n.jpg" alt="">
+  <div class="hero-right">
+    <div class="profile fade">
+      <img src="https://scontent.fktm8-1.fna.fbcdn.net/v/t39.30808-6/467779427_3770242173230051_3996428641314189002_n.jpg" alt="Siddhant Yadav">
+    </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section class="section">
+<!-- WHAT I DO -->
+<section id="what" class="section">
   <h2 class="fade">What I Do</h2>
-  <div class="services">
+  <p class="section-lead fade">
+    I focus on the parts of product design that directly improve usability, clarity, and business outcomes.
+  </p>
+
+  <div class="grid">
     <div class="card fade">
-      <h3>UI/UX for SaaS</h3>
-      <p>Dashboards, result pages, and flows with strong hierarchy and calm visuals.</p>
+      <h3>SaaS UI/UX Design</h3>
+      <p>Dashboards, result pages, onboarding, and component systems with clean hierarchy.</p>
     </div>
+
     <div class="card fade">
       <h3>eCommerce UX</h3>
-      <p>Product pages and checkout flows focused on clarity and conversion.</p>
+      <p>Product pages and checkout flows designed to reduce friction and increase conversions.</p>
     </div>
+
     <div class="card fade">
-      <h3>CMS Builds</h3>
-      <p>Shopify and WordPress implementations with clean structure.</p>
+      <h3>Design → Build Support</h3>
+      <p>Dev-ready layouts and CMS-friendly components for Shopify & WordPress.</p>
     </div>
   </div>
 </section>
 
-<!-- WORK -->
-<section id="work" class="section">
-  <h2 class="fade">Selected Work</h2>
+<!-- HOW I DO IT -->
+<section id="process" class="section">
+  <h2 class="fade">How I Work</h2>
+  <p class="section-lead fade">
+    A simple process that keeps projects fast, structured, and easy to collaborate on.
+  </p>
 
-  <div class="work-grid">
-    <div class="work-item fade">
-      <div class="work-thumb">
-        <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/1.png">
-      </div>
-      <div class="work-content">
-        <h4>SaaS Results Page</h4>
-        <span>Clear performance states</span>
+  <div class="grid">
+    <div class="step fade">
+      <div class="step-inner">
+        <div class="kicker">Step 1</div>
+        <h3>Audit & Goals</h3>
+        <p>We identify what’s unclear, what’s slowing users down, and what matters most for the business.</p>
+        <ul>
+          <li>Quick UX review + notes</li>
+          <li>Competitor references</li>
+          <li>Success metrics / target outcome</li>
+        </ul>
       </div>
     </div>
 
-    <div class="work-item fade">
-      <div class="work-thumb">
-        <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/2.png">
-      </div>
-      <div class="work-content">
-        <h4>Checkout Optimization</h4>
-        <span>Simplified payment flow</span>
+    <div class="step fade">
+      <div class="step-inner">
+        <div class="kicker">Step 2</div>
+        <h3>Structure & Flow</h3>
+        <p>I simplify the layout and user journey first — so the UI becomes easy to scan and easy to use.</p>
+        <ul>
+          <li>Wireframe / flow map</li>
+          <li>Content + hierarchy</li>
+          <li>Interaction notes</li>
+        </ul>
       </div>
     </div>
 
-    <div class="work-item fade">
-      <div class="work-thumb">
-        <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/3.png">
+    <div class="step fade">
+      <div class="step-inner">
+        <div class="kicker">Step 3</div>
+        <h3>UI + Handoff</h3>
+        <p>Final UI with clean components, plus dev-friendly handoff so implementation stays smooth.</p>
+        <ul>
+          <li>Polished UI screens</li>
+          <li>Components / tokens</li>
+          <li>Specs + ready-to-build guidance</li>
+        </ul>
       </div>
-      <div class="work-content">
-        <h4>SaaS Dashboard</h4>
-        <span>Improved usability & scanability</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <h2 class="fade">About Me</h2>
+  <p class="section-lead fade">
+    A designer with a computer science background — focused on UI that looks good and works in real builds.
+  </p>
+
+  <div class="about-wrap">
+    <div class="about fade">
+      <p>
+        I’m <strong>Siddhant Yadav</strong>, a UI/UX & Web Designer focused on SaaS and eCommerce.
+        My work is centered on <strong>clarity</strong>, <strong>clean systems</strong>, and <strong>build-ready UI</strong>.
+      </p>
+      <br />
+      <p>
+        I completed my <strong>Bachelor’s in Computer Science</strong> from the <strong>University of Wolverhampton</strong>.
+        That background helps me design interfaces that developers can implement smoothly — with practical spacing,
+        reusable components, and consistent rules.
+      </p>
+    </div>
+
+    <div class="facts">
+      <div class="fact fade">
+        <b>Education</b>
+        <span>BSc Computer Science — University of Wolverhampton</span>
+      </div>
+      <div class="fact fade">
+        <b>Focus</b>
+        <span>SaaS dashboards • eCommerce UX • Design systems</span>
+      </div>
+      <div class="fact fade">
+        <b>Tools</b>
+        <span>Figma • Webflow • Shopify • WordPress</span>
       </div>
     </div>
   </div>
@@ -364,22 +473,24 @@ a{text-decoration:none;color:inherit}
 <!-- FOOTER -->
 <section id="contact" class="footer">
   <h2 class="fade">Let’s work together</h2>
-  <p class="fade">Available for redesigns and ongoing UI work.</p>
-  <div class="cta fade" style="justify-content:center">
+  <p class="fade">Available for redesigns, UI improvements, and ongoing product design work.</p>
+  <div class="cta fade" style="justify-content:center;">
     <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
+    <a href="https://www.freelancer.com/u/siddhant84" class="btn secondary" target="_blank" rel="noreferrer">Freelancer Profile</a>
   </div>
 </section>
 
 </div>
 
 <script>
-const els=document.querySelectorAll(".fade");
-const io=new IntersectionObserver(e=>{
-  e.forEach(x=>{
-    if(x.isIntersecting)x.target.classList.add("show");
-  });
-},{threshold:.15});
-els.forEach(el=>io.observe(el));
+  // reveal on scroll
+  const els = document.querySelectorAll(".fade");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add("show");
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
 </script>
 
 </body>
