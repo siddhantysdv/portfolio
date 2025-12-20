@@ -127,9 +127,9 @@ section{ scroll-margin-top: 92px; }
 }
 .nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* Right controls (theme icon + hamburger) */
+/* Right controls (theme icon + hamburger / desktop uses theme icon too) */
 .controls{
-  display:none; /* shown on mobile */
+  display:flex;
   align-items:center;
   gap:10px;
   flex-shrink:0;
@@ -149,6 +149,9 @@ section{ scroll-margin-top: 92px; }
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
 .icon-btn svg{ width:18px; height:18px; }
+
+/* Hamburger shown only on mobile */
+#menuBtn{ display:none; }
 
 /* ===================== MOBILE MENU ===================== */
 .mobile-menu{
@@ -447,9 +450,11 @@ html[data-theme="dark"] .work-thumb{
 @media(max-width:900px){
   .container{ padding:86px 18px 70px; }
 
-  /* Hide desktop nav, show mobile controls */
+  /* Hide desktop nav on mobile */
   .nav{ display:none; }
-  .controls{ display:flex; }
+
+  /* Show hamburger on mobile */
+  #menuBtn{ display:grid; }
 
   .hero{
     grid-template-columns:1fr;
@@ -489,15 +494,13 @@ html[data-theme="dark"] .work-thumb{
       <a href="#contact">Contact</a>
     </nav>
 
-    <!-- Mobile controls (theme icon BEFORE hamburger) -->
-    <div class="controls" aria-label="Mobile controls">
+    <!-- Controls (theme icon always visible; hamburger only on mobile) -->
+    <div class="controls" aria-label="Topbar controls">
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
-        <!-- icon will be swapped via JS -->
         <span id="themeIcon" aria-hidden="true"></span>
       </button>
 
       <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
-        <!-- hamburger icon -->
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -756,7 +759,6 @@ html[data-theme="dark"] .work-thumb{
 
   function setThemeLabelAndIcon(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-    // show icon that indicates current theme (not next action)
     themeIcon.innerHTML = isDark ? moonIcon() : sunIcon();
     themeBtn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
     themeBtn.title = isDark ? "Dark mode" : "Light mode";
