@@ -26,6 +26,9 @@
   --topbar-border:rgba(15,20,30,.10);
 
   --focus: rgba(10,163,132,.35);
+
+  /* Icon color by theme */
+  --icon:#000; /* light mode icon color */
 }
 
 /* 🌙 DARK MODE */
@@ -44,6 +47,9 @@ html[data-theme="dark"]{
   --topbar-border:rgba(255,255,255,.06);
 
   --focus: rgba(142,234,208,.40);
+
+  /* Icon color by theme */
+  --icon:#fff; /* dark mode icon color */
 }
 
 /* ===================== BASE ===================== */
@@ -127,7 +133,7 @@ section{ scroll-margin-top: 92px; }
 }
 .nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* Right controls (theme icon + hamburger / desktop uses theme icon too) */
+/* Controls (theme always visible; hamburger only on mobile) */
 .controls{
   display:flex;
   align-items:center;
@@ -146,9 +152,13 @@ section{ scroll-margin-top: 92px; }
   cursor:pointer;
   transition:.2s ease;
   padding:0;
+  color: var(--icon); /* ✅ icons become black/white by theme */
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
-.icon-btn svg{ width:18px; height:18px; }
+
+/* Ensure any SVG inherits the button color */
+.icon-btn svg{ width:18px; height:18px; stroke: currentColor; }
+.icon-btn svg *{ stroke: currentColor; }
 
 /* Hamburger shown only on mobile */
 #menuBtn{ display:none; }
@@ -449,11 +459,7 @@ html[data-theme="dark"] .work-thumb{
 /* ===================== MOBILE ===================== */
 @media(max-width:900px){
   .container{ padding:86px 18px 70px; }
-
-  /* Hide desktop nav on mobile */
   .nav{ display:none; }
-
-  /* Show hamburger on mobile */
   #menuBtn{ display:grid; }
 
   .hero{
@@ -462,7 +468,7 @@ html[data-theme="dark"] .work-thumb{
     gap:22px;
     margin-bottom:80px;
   }
-  .hero-right{ order:-1; } /* profile on top */
+  .hero-right{ order:-1; }
   .badge{ margin:0 auto; }
   .cta{ justify-content:center; }
 }
@@ -485,7 +491,6 @@ html[data-theme="dark"] .work-thumb{
       <span>Siddhant Yadav</span>
     </div>
 
-    <!-- Desktop nav (hidden on mobile) -->
     <nav class="nav" aria-label="Primary navigation">
       <a href="#what">What I Do</a>
       <a href="#process">How I Work</a>
@@ -494,7 +499,6 @@ html[data-theme="dark"] .work-thumb{
       <a href="#contact">Contact</a>
     </nav>
 
-    <!-- Controls (theme icon always visible; hamburger only on mobile) -->
     <div class="controls" aria-label="Topbar controls">
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
         <span id="themeIcon" aria-hidden="true"></span>
@@ -523,18 +527,12 @@ html[data-theme="dark"] .work-thumb{
 </div>
 
 <div class="container">
-
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
       <span class="badge fade">Available for Freelance</span>
-
       <h1 class="fade">Minimal, usable UI design for SaaS & eCommerce products.</h1>
-
-      <p class="fade">
-        I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.
-      </p>
-
+      <p class="fade">I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.</p>
       <div class="cta fade">
         <a href="#contact" class="btn primary">Email Me</a>
         <a href="#showcase" class="btn">View Work</a>
@@ -553,21 +551,16 @@ html[data-theme="dark"] .work-thumb{
   <!-- WHAT I DO -->
   <section id="what" class="section">
     <h2 class="fade">What I Do</h2>
-    <p class="section-lead fade">
-      I focus on the parts of product design that directly improve usability, clarity, and business outcomes.
-    </p>
-
+    <p class="section-lead fade">I focus on the parts of product design that directly improve usability, clarity, and business outcomes.</p>
     <div class="grid">
       <div class="card fade">
         <h3>SaaS UI/UX Design</h3>
         <p>Dashboards, result pages, onboarding, and component systems with clean hierarchy.</p>
       </div>
-
       <div class="card fade">
         <h3>eCommerce UX</h3>
         <p>Product pages and checkout flows designed to reduce friction and increase conversions.</p>
       </div>
-
       <div class="card fade">
         <h3>Design → Build Support</h3>
         <p>Dev-ready layouts and CMS-friendly components for Shopify & WordPress.</p>
@@ -578,10 +571,7 @@ html[data-theme="dark"] .work-thumb{
   <!-- HOW I WORK -->
   <section id="process" class="section">
     <h2 class="fade">How I Work</h2>
-    <p class="section-lead fade">
-      A simple process that keeps projects fast, structured, and easy to collaborate on.
-    </p>
-
+    <p class="section-lead fade">A simple process that keeps projects fast, structured, and easy to collaborate on.</p>
     <div class="grid">
       <div class="step fade">
         <div class="step-inner">
@@ -627,10 +617,7 @@ html[data-theme="dark"] .work-thumb{
   <!-- WORK SHOWCASE -->
   <section id="showcase" class="section">
     <h2 class="fade">Work Showcase</h2>
-    <p class="section-lead fade">
-      A few UI screens and redesigns — focused on clarity, hierarchy, and usability.
-    </p>
-
+    <p class="section-lead fade">A few UI screens and redesigns — focused on clarity, hierarchy, and usability.</p>
     <div class="work-grid">
       <article class="work-card fade">
         <div class="work-thumb">
@@ -667,10 +654,7 @@ html[data-theme="dark"] .work-thumb{
   <!-- ABOUT -->
   <section id="about" class="section">
     <h2 class="fade">About Me</h2>
-    <p class="section-lead fade">
-      A designer with a computer science background — focused on UI that looks good and works in real builds.
-    </p>
-
+    <p class="section-lead fade">A designer with a computer science background — focused on UI that looks good and works in real builds.</p>
     <div class="about-wrap">
       <div class="about fade">
         <p>
@@ -711,7 +695,6 @@ html[data-theme="dark"] .work-thumb{
       <a href="https://www.freelancer.com/u/siddhant84" class="btn" target="_blank" rel="noreferrer">Freelancer Profile</a>
     </div>
   </section>
-
 </div>
 
 <script>
@@ -735,7 +718,7 @@ html[data-theme="dark"] .work-thumb{
 
   function sunIcon(){
     return `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4"></circle>
         <path d="M12 2v2"></path>
         <path d="M12 20v2"></path>
@@ -751,7 +734,7 @@ html[data-theme="dark"] .work-thumb{
 
   function moonIcon(){
     return `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path>
       </svg>
     `;
@@ -800,17 +783,14 @@ html[data-theme="dark"] .work-thumb{
     isOpen ? closeMenu() : openMenu();
   });
 
-  // Close menu when clicking a link
   document.querySelectorAll("[data-close-menu]").forEach(a => {
     a.addEventListener("click", closeMenu);
   });
 
-  // Close on Escape key
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
-  // Close if resized to desktop
   window.addEventListener("resize", () => {
     if (window.innerWidth > 900) closeMenu();
   });
