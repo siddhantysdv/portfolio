@@ -12,18 +12,16 @@
 :root{
   --bg:#f7f8fb;
   --panel:rgba(15,20,30,.04);
-  --panel2:rgba(15,20,30,.07);
+  --panel2:rgba(15,20,30,.08);
   --text:#0f1420;
   --muted:#4b5567;
   --accent:#0aa384;
-  --border:rgba(15,20,30,.10);
 
-  --shadow:0 16px 42px rgba(15,20,30,.12);
+  --shadow:0 22px 70px rgba(15,20,30,.14);
   --radius:20px;
   --max:1100px;
 
   --topbar:rgba(247,248,251,.72);
-
   --focus: rgba(10,163,132,.35);
 
   /* icons by theme */
@@ -38,16 +36,13 @@
 html[data-theme="dark"]{
   --bg:#0c0f14;
   --panel:rgba(255,255,255,.03);
-  --panel2:rgba(255,255,255,.07);
+  --panel2:rgba(255,255,255,.08);
   --text:#eef1f6;
   --muted:#9aa2b2;
   --accent:#8eead0;
-  --border:rgba(255,255,255,.07);
 
-  --shadow:0 22px 55px rgba(0,0,0,.45);
-
+  --shadow:0 26px 90px rgba(0,0,0,.55);
   --topbar:rgba(12,15,20,.64);
-
   --focus: rgba(142,234,208,.40);
 
   --icon:#fff;
@@ -66,7 +61,13 @@ body{
 }
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
-:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
+
+/* Focus */
+:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:3px;
+  border-radius:12px;
+}
 
 /* Better anchor spacing below fixed topbar */
 section{ scroll-margin-top: 96px; }
@@ -79,7 +80,9 @@ section{ scroll-margin-top: 96px; }
 .shell{
   min-height: calc(100vh - (var(--page-pad) * 2));
   border-radius: 24px;
-  box-shadow: var(--shadow);
+  border:none;                 /* ✅ no border */
+  outline:none;                /* ✅ no border-like outline */
+  box-shadow: var(--shadow);   /* keep soft shadow */
   background:
     radial-gradient(900px 420px at 20% -10%, rgba(10,163,132,.10), transparent 60%),
     radial-gradient(900px 420px at 80% -10%, rgba(120,130,255,.10), transparent 60%),
@@ -91,20 +94,20 @@ section{ scroll-margin-top: 96px; }
 .topbar{
   position:fixed;
   z-index:50;
- 
+  top: var(--page-pad);
   left: var(--page-pad);
   right: var(--page-pad);
-
   backdrop-filter:blur(14px);
   background:var(--topbar);
-  border-radius:18px; /* no border as requested */
+  border:none;        /* ✅ no border */
+  outline:none;       /* ✅ no outline */
+  border-radius:18px;
 }
 .topbar-inner{
   max-width:var(--max);
   margin:auto;
   padding:12px 18px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
   gap:16px;
 }
@@ -115,29 +118,31 @@ section{ scroll-margin-top: 96px; }
   font-weight:800;
   font-size:14px;
   white-space:nowrap;
+  flex-shrink:0;
 }
 .dot{
   width:10px;height:10px;border-radius:999px;
   background:var(--accent);
 }
 
-/* ===================== NAV (SPACE BETWEEN) ===================== */
+/* ===================== NAV (TRUE SPACE-BETWEEN) ===================== */
+/* Key: nav must expand, and links must NOT be flex:1 pills (keep natural size) */
 .nav{
-  flex:1;
+  flex:1;                           /* ✅ takes remaining space */
+  max-width: 560px;                 /* keeps nav centered-ish */
   display:flex;
   align-items:center;
-  justify-content:space-between; /* ✅ requested */
-  gap:12px;
-  margin:0 8px;
-  min-width: 420px;
+  justify-content:space-between;    /* ✅ requested */
+  gap:18px;                         /* fallback spacing if space-between tight */
+  margin:0 10px;
 }
 .nav a{
-  flex:1;
-  text-align:center;
   font-size:13px;
-  padding:8px 12px;
+  padding:8px 14px;
   border-radius:999px;
   background:var(--panel);
+  border:none;                      /* ✅ no border on pills */
+  outline:none;
   transition:.2s ease;
   white-space:nowrap;
 }
@@ -161,6 +166,7 @@ section{ scroll-margin-top: 96px; }
   padding:0;
   color: var(--icon); /* ✅ black in light, white in dark */
   border:none;        /* ✅ no border */
+  outline:none;
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
 .icon-btn svg{ width:18px; height:18px; stroke: currentColor; }
@@ -174,17 +180,18 @@ section{ scroll-margin-top: 96px; }
   display:none;
   position:fixed;
   z-index:49;
-
   top: calc(var(--page-pad) + 62px);
   left: var(--page-pad);
   right: var(--page-pad);
-
   padding:12px 14px 14px;
   background:var(--topbar);
   backdrop-filter:blur(14px);
-  border-radius:18px; /* no border */
+  border:none;        /* ✅ no border */
+  outline:none;
+  border-radius:18px;
 }
 .mobile-menu.open{ display:block; }
+
 .mobile-links{
   max-width:var(--max);
   margin:0 auto;
@@ -197,6 +204,8 @@ section{ scroll-margin-top: 96px; }
   padding:12px 14px;
   border-radius:14px;
   background:var(--panel);
+  border:none;        /* ✅ no border */
+  outline:none;
   transition:.2s ease;
 }
 .mobile-links a:hover{ background:var(--panel2); transform:translateY(-1px); }
@@ -225,6 +234,7 @@ section{ scroll-margin-top: 96px; }
   background:rgba(10,163,132,.10);
   color:var(--accent);
   width:fit-content;
+  border:none; /* ✅ */
 }
 html[data-theme="dark"] .badge{
   background:rgba(142,234,208,.10);
@@ -255,7 +265,8 @@ html[data-theme="dark"] .badge{
   transition:.2s ease;
   user-select:none;
   white-space:nowrap;
-  border:none; /* no border */
+  border:none; /* ✅ */
+  outline:none;
 }
 .btn.primary{
   background:var(--accent);
@@ -268,13 +279,14 @@ html[data-theme="dark"] .badge{
 /* Profile */
 .hero-right{ display:flex; justify-content:center; }
 .profile{
-  position:relative;
   width:260px;
   aspect-ratio:1;
   border-radius:999px;
   overflow:hidden;
   background:var(--panel);
-  box-shadow:var(--shadow);
+  border:none; /* ✅ */
+  outline:none;
+  box-shadow: var(--shadow);
 }
 .profile img{ width:100%; height:100%; object-fit:cover; }
 
@@ -303,13 +315,13 @@ html[data-theme="dark"] .badge{
   .grid{ grid-template-columns:1fr; }
 }
 
-/* ===================== CARDS ===================== */
+/* ===================== CARDS (NO BORDER) ===================== */
 .card{
   background:var(--panel);
   border-radius:var(--radius);
   padding:20px;
   transition:.25s ease;
-  border:none; /* no border */
+  border:none; outline:none; /* ✅ */
 }
 .card:hover{
   transform:translateY(-6px);
@@ -329,7 +341,7 @@ html[data-theme="dark"] .badge{
   background:var(--panel);
   border-radius:var(--radius);
   padding:20px;
-  border:none; /* no border */
+  border:none; outline:none; /* ✅ */
 }
 .step::before{
   content:"";
@@ -379,7 +391,7 @@ html[data-theme="dark"] .kicker{ color: rgba(238,241,246,.75); }
   border-radius:var(--radius);
   overflow:hidden;
   transition:.25s ease;
-  border:none; /* no border */
+  border:none; outline:none; /* ✅ */
 }
 .work-card:hover{ transform:translateY(-6px); background:var(--panel2); }
 
@@ -403,14 +415,8 @@ html[data-theme="dark"] .work-thumb{
   transition: transform .35s ease;
 }
 .work-card:hover .work-thumb img{ transform:scale(1.03); }
-.work-body{
-  padding:16px 18px 18px;
-}
-.work-body h3{
-  font-size:16px;
-  font-weight:800;
-  margin-bottom:6px;
-}
+.work-body{ padding:16px 18px 18px; }
+.work-body h3{ font-size:16px; font-weight:800; margin-bottom:6px; }
 .work-body p{ color:var(--muted); font-size:14px; }
 
 /* ===================== ABOUT ===================== */
@@ -429,19 +435,16 @@ html[data-theme="dark"] .work-thumb{
   padding:20px;
   color:var(--muted);
   font-size:15.5px;
-  border:none; /* no border */
+  border:none; outline:none; /* ✅ */
 }
 .about strong{ color:var(--text); font-weight:850; }
 
-.facts{
-  display:grid;
-  gap:12px;
-}
+.facts{ display:grid; gap:12px; }
 .fact{
   background:var(--panel);
   border-radius:var(--radius);
   padding:16px;
-  border:none; /* no border */
+  border:none; outline:none; /* ✅ */
 }
 .fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:800; }
 .fact span{ color:var(--muted); font-size:14px; }
@@ -494,7 +497,6 @@ html[data-theme="dark"] .work-thumb{
 </head>
 
 <body>
-
 <div class="page">
   <div class="shell">
 
@@ -742,31 +744,23 @@ html[data-theme="dark"] .work-thumb{
   }, { threshold: 0.15 });
   els.forEach(el => io.observe(el));
 
-  // ===== Theme toggle (icon + persist) =====
+  // Theme toggle (icon + persist)
   const themeBtn = document.getElementById("themeBtn");
   const themeIcon = document.getElementById("themeIcon");
   const savedTheme = localStorage.getItem("theme");
-
-  if (savedTheme === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }
+  if (savedTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
 
   function sunIcon(){
     return `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2"></path>
-        <path d="M12 20v2"></path>
-        <path d="M4.93 4.93l1.41 1.41"></path>
-        <path d="M17.66 17.66l1.41 1.41"></path>
-        <path d="M2 12h2"></path>
-        <path d="M20 12h2"></path>
-        <path d="M4.93 19.07l1.41-1.41"></path>
-        <path d="M17.66 6.34l1.41-1.41"></path>
+        <path d="M12 2v2"></path><path d="M12 20v2"></path>
+        <path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path>
+        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+        <path d="M4.93 19.07l1.41-1.41"></path><path d="M17.66 6.34l1.41-1.41"></path>
       </svg>
     `;
   }
-
   function moonIcon(){
     return `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -774,14 +768,10 @@ html[data-theme="dark"] .work-thumb{
       </svg>
     `;
   }
-
-  function setThemeLabelAndIcon(){
+  function setThemeIcon(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     themeIcon.innerHTML = isDark ? moonIcon() : sunIcon();
-    themeBtn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-    themeBtn.title = isDark ? "Dark mode" : "Light mode";
   }
-
   function toggleTheme(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     if (isDark) {
@@ -791,26 +781,22 @@ html[data-theme="dark"] .work-thumb{
       document.documentElement.setAttribute("data-theme", "dark");
       localStorage.setItem("theme", "dark");
     }
-    setThemeLabelAndIcon();
+    setThemeIcon();
   }
-
   themeBtn.addEventListener("click", toggleTheme);
-  setThemeLabelAndIcon();
+  setThemeIcon();
 
-  // ===== Mobile hamburger menu =====
+  // Mobile hamburger menu
   const menuBtn = document.getElementById("menuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
 
   function closeMenu(){
     mobileMenu.classList.remove("open");
     menuBtn.setAttribute("aria-expanded", "false");
-    menuBtn.setAttribute("aria-label", "Open menu");
   }
-
   function openMenu(){
     mobileMenu.classList.add("open");
     menuBtn.setAttribute("aria-expanded", "true");
-    menuBtn.setAttribute("aria-label", "Close menu");
   }
 
   menuBtn.addEventListener("click", () => {
@@ -818,17 +804,14 @@ html[data-theme="dark"] .work-thumb{
     isOpen ? closeMenu() : openMenu();
   });
 
-  // Close menu when clicking a link
   document.querySelectorAll("[data-close-menu]").forEach(a => {
     a.addEventListener("click", closeMenu);
   });
 
-  // Close on Escape
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
-  // Close if resized to desktop
   window.addEventListener("resize", () => {
     if (window.innerWidth > 900) closeMenu();
   });
