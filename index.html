@@ -275,6 +275,57 @@ a{text-decoration:none;color:inherit}
 .fact b{ display:block; font-size:14px; margin-bottom:6px; }
 .fact span{ color:var(--muted); font-size:14px; }
 
+/* ---------------- WORKS (SHOWCASE) ---------------- */
+
+.work-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
+}
+
+.work-card{
+  border-radius:22px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  overflow:hidden;
+  transition:.35s ease;
+}
+
+.work-card:hover{
+  transform:translateY(-6px);
+  background:rgba(255,255,255,.03);
+}
+
+.work-thumb{
+  position:relative;
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+  padding:18px;
+}
+
+.work-thumb img{
+  width:100%;
+  height:210px;
+  object-fit:contain; /* ✅ no crop */
+  transition:.4s ease;
+}
+
+.work-card:hover img{ transform:scale(1.03); }
+
+.work-body{
+  padding:18px 18px 20px;
+}
+
+.work-body h3{
+  font-size:16px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.work-body p{
+  color:var(--muted);
+  font-size:14px;
+}
+
 /* ---------------- FOOTER ---------------- */
 
 .footer{
@@ -346,6 +397,7 @@ a{text-decoration:none;color:inherit}
     <div class="cta fade">
       <a href="#what" class="btn primary">What I Do</a>
       <a href="#process" class="btn secondary">How I Work</a>
+      <a href="#showcase" class="btn secondary">Work</a>
       <a href="#about" class="btn secondary">About</a>
       <a href="#contact" class="btn secondary">Contact</a>
     </div>
@@ -429,6 +481,46 @@ a{text-decoration:none;color:inherit}
         </ul>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- WORK SHOWCASE -->
+<section id="showcase" class="section">
+  <h2 class="fade">Work Showcase</h2>
+  <p class="section-lead fade">
+    A few UI screens and redesigns I’ve worked on — focused on clarity, hierarchy, and usability.
+  </p>
+
+  <div class="work-grid">
+    <article class="work-card fade">
+      <div class="work-thumb">
+        <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/1.png" alt="SaaS Results Page UI">
+      </div>
+      <div class="work-body">
+        <h3>SaaS Results Page</h3>
+        <p>Clear pass/fail states with readable metrics and strong hierarchy.</p>
+      </div>
+    </article>
+
+    <article class="work-card fade">
+      <div class="work-thumb">
+        <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/2.png" alt="eCommerce Checkout UI">
+      </div>
+      <div class="work-body">
+        <h3>eCommerce Checkout</h3>
+        <p>Simplified checkout flow to reduce friction and increase trust.</p>
+      </div>
+    </article>
+
+    <article class="work-card fade">
+      <div class="work-thumb">
+        <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/3.png" alt="Dashboard UI">
+      </div>
+      <div class="work-body">
+        <h3>Dashboard UI</h3>
+        <p>Improved scanability and layout structure for analytics dashboards.</p>
+      </div>
+    </article>
   </div>
 </section>
 
