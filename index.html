@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Siddhant Yadav — UI/UX Designer</title>
-<meta name="description" content="Siddhant Yadav — UI/UX Designer for SaaS & eCommerce. Minimal, usable, build-ready interfaces." />
+<meta name="description" content="Siddhant Yadav — UI/UX Designer for SaaS & eCommerce. Minimal, usable, build-ready interfaces with a clear process." />
 
 <style>
 /* ===================== THEME ===================== */
-/* LIGHT (DEFAULT) */
+/* LIGHT DEFAULT */
 :root{
   --bg:#f7f8fb;
   --panel:rgba(15,20,30,.04);
@@ -18,13 +18,8 @@
   --accent:#0aa384;
   --border:rgba(15,20,30,.10);
   --shadow:0 12px 30px rgba(15,20,30,.10);
-  --radius:20px;
-  --max:1100px;
-  --topbar:rgba(247,248,251,.75);
-  --topbar-border:rgba(15,20,30,.10);
 }
 
-/* DARK */
 html[data-theme="dark"]{
   --bg:#0c0f14;
   --panel:rgba(255,255,255,.02);
@@ -34,19 +29,14 @@ html[data-theme="dark"]{
   --accent:#8eead0;
   --border:rgba(255,255,255,.07);
   --shadow:0 18px 40px rgba(0,0,0,.35);
-  --topbar:rgba(12,15,20,.6);
-  --topbar-border:rgba(255,255,255,.06);
 }
 
 /* ===================== BASE ===================== */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family: Inter, system-ui, sans-serif;
-  background:
-    radial-gradient(900px 420px at 20% -10%, rgba(10,163,132,.08), transparent 60%),
-    radial-gradient(900px 420px at 80% -10%, rgba(120,130,255,.08), transparent 60%),
-    var(--bg);
+  font-family:Inter,system-ui,sans-serif;
+  background:var(--bg);
   color:var(--text);
   line-height:1.6;
 }
@@ -54,9 +44,9 @@ a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 
 .container{
-  max-width:var(--max);
+  max-width:1100px;
   margin:auto;
-  padding:88px 24px 80px;
+  padding:96px 24px 80px;
 }
 section{scroll-margin-top:90px}
 
@@ -64,36 +54,25 @@ section{scroll-margin-top:90px}
 .topbar{
   position:fixed;
   top:0;left:0;right:0;
+  background:var(--bg);
+  border-bottom:1px solid var(--border);
   z-index:50;
-  backdrop-filter:blur(12px);
-  background:var(--topbar);
-  border-bottom:1px solid var(--topbar-border);
 }
 .topbar-inner{
-  max-width:var(--max);
+  max-width:1100px;
   margin:auto;
   padding:12px 24px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
-}
-.brand{
-  display:flex;
   align-items:center;
-  gap:8px;
-  font-weight:700;
-  font-size:14px;
 }
-.dot{
-  width:10px;height:10px;border-radius:999px;
-  background:var(--accent);
-}
+.brand{font-weight:700;font-size:14px}
 
 /* Desktop nav */
 .nav{
   display:flex;
-  align-items:center;
   gap:10px;
+  align-items:center;
 }
 .nav a{
   font-size:13px;
@@ -103,23 +82,28 @@ section{scroll-margin-top:90px}
   background:var(--panel);
 }
 
-/* ICON BUTTONS */
+/* Icon buttons */
 .icon-btn{
   width:34px;
   height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
   border-radius:999px;
   border:1px solid var(--border);
   background:var(--panel);
-  display:grid;
-  place-items:center;
   cursor:pointer;
-  font-size:16px;
 }
 
-/* Hamburger hidden on desktop */
-.hamburger{ display:none; }
+/* Mobile actions */
+.mobile-actions{
+  display:none;
+  gap:10px;
+  align-items:center;
+}
 
-/* ===================== MOBILE MENU ===================== */
+/* Mobile menu */
 .mobile-menu{
   display:none;
   position:fixed;
@@ -134,12 +118,11 @@ section{scroll-margin-top:90px}
 .mobile-menu a{
   display:block;
   padding:12px;
+  margin-bottom:10px;
   border-radius:14px;
   border:1px solid var(--border);
   background:var(--panel);
-  margin-bottom:10px;
   text-align:center;
-  font-size:14px;
 }
 
 /* ===================== HERO ===================== */
@@ -155,14 +138,13 @@ section{scroll-margin-top:90px}
   font-size:13px;
   padding:6px 14px;
   border-radius:999px;
-  background:rgba(10,163,132,.10);
+  background:rgba(10,163,132,.1);
   color:var(--accent);
   width:fit-content;
 }
 .hero h1{
   font-size:clamp(34px,5vw,54px);
-  font-weight:800;
-  letter-spacing:-.03em;
+  font-weight:700;
 }
 .hero p{font-size:18px;color:var(--muted)}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
@@ -176,7 +158,7 @@ section{scroll-margin-top:90px}
   background:var(--accent);
   color:#02140e;
   border:none;
-  font-weight:700;
+  font-weight:600;
 }
 
 .hero-right{display:flex;justify-content:center}
@@ -186,35 +168,31 @@ section{scroll-margin-top:90px}
   border-radius:999px;
   overflow:hidden;
   border:1px solid var(--border);
-  background:var(--panel);
   box-shadow:var(--shadow);
 }
 
 /* ===================== SECTIONS ===================== */
-.section{margin-bottom:92px}
-.section h2{font-size:26px;font-weight:800;margin-bottom:10px}
-.section-lead{color:var(--muted);margin-bottom:22px;max-width:780px}
+.section{margin-bottom:96px}
+.section h2{font-size:26px;margin-bottom:10px}
+.section-lead{color:var(--muted);margin-bottom:24px}
 
-/* ===================== GRID ===================== */
+/* ===================== GRIDS ===================== */
 .grid,.work-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-@media(max-width:980px){
-  .grid,.work-grid{grid-template-columns:1fr}
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
 }
 
 /* ===================== CARDS ===================== */
-.card,.work-card,.step,.about,.fact{
+.card,.step,.work-card,.about,.fact{
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:20px;
+  border-radius:20px;
+  padding:22px;
 }
 .work-card{padding:0;overflow:hidden}
 .work-thumb{padding:16px;border-bottom:1px solid var(--border)}
-.work-thumb img{height:210px;object-fit:contain;width:100%}
+.work-thumb img{height:200px;object-fit:contain;width:100%}
 
 /* ===================== ABOUT ===================== */
 .about-wrap{
@@ -222,30 +200,41 @@ section{scroll-margin-top:90px}
   grid-template-columns:1.2fr .8fr;
   gap:16px;
 }
-@media(max-width:980px){.about-wrap{grid-template-columns:1fr}}
 
 /* ===================== FOOTER ===================== */
 .footer{
   text-align:center;
-  padding-top:70px;
+  padding-top:64px;
   border-top:1px solid var(--border);
 }
 
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none!important; transition:none!important; }
+}
 /* ===================== MOBILE ===================== */
 @media(max-width:900px){
+  .container{ padding:86px 18px 70px; }
+
   .hero{
     grid-template-columns:1fr;
     text-align:center;
+    gap:22px;
+    margin-bottom:80px;
   }
-  .hero-right{order:-1}
-  .badge{margin:0 auto}
-  .cta{justify-content:center}
+  .hero-right{ order:-1; } /* profile on top */
+  .badge{ margin:0 auto; }
+  .cta{ justify-content:center; }
+}
+ 
+ 
 
-  /* Desktop nav hidden */
   .nav{display:none}
+  .mobile-actions{display:flex}
 
-  /* Hamburger visible */
-  .hamburger{display:grid}
+  .about-wrap{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -255,24 +244,22 @@ section{scroll-margin-top:90px}
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand">
-      <span class="dot"></span>Siddhant Yadav
-    </div>
+    <div class="brand">Siddhant Yadav</div>
 
-    <!-- Desktop Nav -->
+    <!-- Desktop nav -->
     <nav class="nav">
       <a href="#what">What I Do</a>
       <a href="#process">How I Work</a>
       <a href="#showcase">Work</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+      <button class="icon-btn" id="themeBtn">🌙</button>
     </nav>
 
-    <!-- Mobile Icons -->
-    <div class="nav hamburger">
-      <button class="icon-btn" id="menuBtn" aria-label="Open menu">☰</button>
-      <button class="icon-btn" id="themeBtnMobile" aria-label="Toggle theme">🌙</button>
+    <!-- Mobile actions -->
+    <div class="mobile-actions">
+      <button class="icon-btn" id="themeBtnMobile">🌙</button>
+      <button class="icon-btn" id="menuBtn">☰</button>
     </div>
   </div>
 </div>
@@ -293,7 +280,7 @@ section{scroll-margin-top:90px}
   <div class="hero-left">
     <span class="badge">Available for Freelance</span>
     <h1>Minimal, usable UI design for SaaS & eCommerce products.</h1>
-    <p>I design calm interfaces with clean structure and build-ready systems.</p>
+    <p>I design clean interfaces that are easy to use and easy to build.</p>
     <div class="cta">
       <a href="#contact" class="btn primary">Email Me</a>
       <a href="#showcase" class="btn">View Work</a>
@@ -307,90 +294,203 @@ section{scroll-margin-top:90px}
 </section>
 
 <!-- WHAT I DO -->
-<section id="what" class="section">
-  <h2>What I Do</h2>
-  <p class="section-lead">I design interfaces that improve clarity and usability.</p>
-  <div class="grid">
-    <div class="card">SaaS UI/UX Design</div>
-    <div class="card">eCommerce UX</div>
-    <div class="card">Design → Build Support</div>
-  </div>
-</section>
+  <section id="what" class="section">
+    <h2 class="fade">What I Do</h2>
+    <p class="section-lead fade">
+      I focus on the parts of product design that directly improve usability, clarity, and business outcomes.
+    </p>
 
-<!-- HOW I WORK -->
-<section id="process" class="section">
-  <h2>How I Work</h2>
-  <div class="grid">
-    <div class="step">Audit & Goals</div>
-    <div class="step">Structure & Flow</div>
-    <div class="step">UI & Handoff</div>
-  </div>
-</section>
+    <div class="grid">
+      <div class="card fade">
+        <h3>SaaS UI/UX Design</h3>
+        <p>Dashboards, result pages, onboarding, and component systems with clean hierarchy.</p>
+      </div>
 
-<!-- WORK -->
-<section id="showcase" class="section">
-  <h2>Work Showcase</h2>
-  <div class="work-grid">
-    <div class="work-card"><div class="work-thumb"><img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/1.png"></div></div>
-    <div class="work-card"><div class="work-thumb"><img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/2.png"></div></div>
-    <div class="work-card"><div class="work-thumb"><img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/3.png"></div></div>
-  </div>
-</section>
+      <div class="card fade">
+        <h3>eCommerce UX</h3>
+        <p>Product pages and checkout flows designed to reduce friction and increase conversions.</p>
+      </div>
 
-<!-- ABOUT -->
-<section id="about" class="section">
-  <h2>About Me</h2>
-  <div class="about-wrap">
-    <div class="about">
-      Bachelor’s in Computer Science — University of Wolverhampton.
+      <div class="card fade">
+        <h3>Design → Build Support</h3>
+        <p>Dev-ready layouts and CMS-friendly components for Shopify & WordPress.</p>
+      </div>
     </div>
-    <div class="fact">SaaS • eCommerce • Design Systems</div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<section id="contact" class="footer">
-  <h2>Let’s work together</h2>
-  <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
-</section>
+  <!-- HOW I WORK -->
+  <section id="process" class="section">
+    <h2 class="fade">How I Work</h2>
+    <p class="section-lead fade">
+      A simple process that keeps projects fast, structured, and easy to collaborate on.
+    </p>
+
+    <div class="grid">
+      <div class="step fade">
+        <div class="step-inner">
+          <div class="kicker">Step 1</div>
+          <h3>Audit & Goals</h3>
+          <p>We identify what’s unclear, what’s slowing users down, and what matters most for the business.</p>
+          <ul>
+            <li>Quick UX review + notes</li>
+            <li>Competitor references</li>
+            <li>Success metrics / target outcome</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step fade">
+        <div class="step-inner">
+          <div class="kicker">Step 2</div>
+          <h3>Structure & Flow</h3>
+          <p>I simplify the layout and user journey first — so the UI becomes easy to scan and easy to use.</p>
+          <ul>
+            <li>Wireframe / flow map</li>
+            <li>Content + hierarchy</li>
+            <li>Interaction notes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step fade">
+        <div class="step-inner">
+          <div class="kicker">Step 3</div>
+          <h3>UI + Handoff</h3>
+          <p>Final UI with clean components, plus dev-friendly handoff so implementation stays smooth.</p>
+          <ul>
+            <li>Polished UI screens</li>
+            <li>Components / tokens</li>
+            <li>Specs + ready-to-build guidance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK SHOWCASE -->
+  <section id="showcase" class="section">
+    <h2 class="fade">Work Showcase</h2>
+    <p class="section-lead fade">
+      A few UI screens and redesigns — focused on clarity, hierarchy, and usability.
+    </p>
+
+    <div class="work-grid">
+      <article class="work-card fade">
+        <div class="work-thumb">
+          <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/1.png" alt="SaaS Results Page UI">
+        </div>
+        <div class="work-body">
+          <h3>SaaS Results Page</h3>
+          <p>Clear pass/fail states with readable metrics and strong hierarchy.</p>
+        </div>
+      </article>
+
+      <article class="work-card fade">
+        <div class="work-thumb">
+          <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/2.png" alt="eCommerce Checkout UI">
+        </div>
+        <div class="work-body">
+          <h3>eCommerce Checkout</h3>
+          <p>Simplified checkout to reduce friction and increase trust.</p>
+        </div>
+      </article>
+
+      <article class="work-card fade">
+        <div class="work-thumb">
+          <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/3.png" alt="Dashboard UI">
+        </div>
+        <div class="work-body">
+          <h3>Dashboard UI</h3>
+          <p>Improved scanability and layout structure for analytics dashboards.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <h2 class="fade">About Me</h2>
+    <p class="section-lead fade">
+      A designer with a computer science background — focused on UI that looks good and works in real builds.
+    </p>
+
+    <div class="about-wrap">
+      <div class="about fade">
+        <p>
+          I’m <strong>Siddhant Yadav</strong>, a UI/UX & Web Designer focused on SaaS and eCommerce.
+          My work is centered on <strong>clarity</strong>, <strong>clean systems</strong>, and <strong>build-ready UI</strong>.
+        </p>
+        <br />
+        <p>
+          I completed my <strong>Bachelor’s in Computer Science</strong> from the <strong>University of Wolverhampton</strong>.
+          That background helps me design interfaces that developers can implement smoothly — with practical spacing,
+          reusable components, and consistent rules.
+        </p>
+      </div>
+
+      <div class="facts">
+        <div class="fact fade">
+          <b>Education</b>
+          <span>BSc Computer Science — University of Wolverhampton</span>
+        </div>
+        <div class="fact fade">
+          <b>Focus</b>
+          <span>SaaS dashboards • eCommerce UX • Design systems</span>
+        </div>
+        <div class="fact fade">
+          <b>Tools</b>
+          <span>Figma • Webflow • Shopify • WordPress</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <section id="contact" class="footer">
+    <h2 class="fade">Let’s work together</h2>
+    <p class="fade">Available for redesigns, UI improvements, and ongoing product design work.</p>
+    <div class="cta fade" style="justify-content:center;">
+      <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
+      <a href="https://www.freelancer.com/u/siddhant84" class="btn" target="_blank" rel="noreferrer">Freelancer Profile</a>
+    </div>
+  </section>
 
 </div>
 
 <script>
 /* THEME TOGGLE */
 const root=document.documentElement;
-const btn=document.getElementById("themeBtn");
-const btnM=document.getElementById("themeBtnMobile");
+const btns=[
+  document.getElementById("themeBtn"),
+  document.getElementById("themeBtnMobile")
+];
 const saved=localStorage.getItem("theme");
-
-if(saved==="dark"){ root.setAttribute("data-theme","dark"); }
+if(saved==="dark") root.setAttribute("data-theme","dark");
 
 function updateIcon(){
   const dark=root.getAttribute("data-theme")==="dark";
-  const icon=dark?"☀️":"🌙";
-  btn.textContent=icon;
-  btnM.textContent=icon;
+  btns.forEach(b=>b.textContent=dark?"☀️":"🌙");
 }
 updateIcon();
 
-function toggleTheme(){
-  const dark=root.getAttribute("data-theme")==="dark";
-  if(dark){
-    root.removeAttribute("data-theme");
-    localStorage.setItem("theme","light");
-  }else{
-    root.setAttribute("data-theme","dark");
-    localStorage.setItem("theme","dark");
-  }
-  updateIcon();
-}
-btn.onclick=toggleTheme;
-btnM.onclick=toggleTheme;
+btns.forEach(b=>{
+  b.onclick=()=>{
+    const dark=root.getAttribute("data-theme")==="dark";
+    if(dark){
+      root.removeAttribute("data-theme");
+      localStorage.setItem("theme","light");
+    }else{
+      root.setAttribute("data-theme","dark");
+      localStorage.setItem("theme","dark");
+    }
+    updateIcon();
+  };
+});
 
 /* MOBILE MENU */
 const menu=document.getElementById("mobileMenu");
 document.getElementById("menuBtn").onclick=()=>{
-  menu.style.display = menu.style.display==="block" ? "none" : "block";
+  menu.style.display=menu.style.display==="block"?"none":"block";
 };
 menu.querySelectorAll("a").forEach(a=>{
   a.onclick=()=>menu.style.display="none";
