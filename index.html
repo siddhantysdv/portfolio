@@ -18,19 +18,18 @@
   --accent:#0aa384;
 
   --shadow:0 16px 42px rgba(15,20,30,.12);
-  --shadow-soft: 0 10px 26px rgba(15,20,30,.10);
   --radius:20px;
   --max:1100px;
 
   --topbar:rgba(247,248,251,.72);
   --focus: rgba(10,163,132,.35);
 
-  /* icon color */
+  /* icons by theme */
   --icon:#000;
 
-  /* fullscreen margins + padding */
-  --page-pad:16px;
-  --content-pad:24px;
+  /* fullscreen layout */
+  --page-pad:16px;       /* outer margin around whole page */
+  --content-pad:24px;    /* inner padding in shell */
 }
 
 /* 🌙 DARK MODE */
@@ -43,8 +42,6 @@ html[data-theme="dark"]{
   --accent:#8eead0;
 
   --shadow:0 22px 55px rgba(0,0,0,.45);
-  --shadow-soft: 0 14px 34px rgba(0,0,0,.35);
-
   --topbar:rgba(12,15,20,.64);
   --focus: rgba(142,234,208,.40);
 
@@ -67,7 +64,7 @@ a{text-decoration:none;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
 
 /* Better anchor spacing below fixed topbar */
-section{ scroll-margin-top: 104px; }
+section{ scroll-margin-top: 96px; }
 
 /* ===================== FULLSCREEN PAGE SHELL (NO BORDERS) ===================== */
 .page{
@@ -85,7 +82,7 @@ section{ scroll-margin-top: 104px; }
   overflow:hidden;
 }
 
-/* ===================== TOP BAR (NO BORDER) ===================== */
+/* ===================== TOP BAR (LAYOUT FIXED) ===================== */
 .topbar{
   position:fixed;
   z-index:50;
@@ -95,12 +92,8 @@ section{ scroll-margin-top: 104px; }
 
   backdrop-filter:blur(14px);
   background:var(--topbar);
-  border-radius:18px;
-  /* ✅ no border */
-  box-shadow: var(--shadow-soft);
+  border-radius:18px; /* ✅ no border, only radius */
 }
-
-/* 3-column topbar layout: brand | centered nav | right controls */
 .topbar-inner{
   max-width:var(--max);
   margin:auto;
@@ -110,6 +103,7 @@ section{ scroll-margin-top: 104px; }
   gap:16px;
 }
 
+/* LEFT: brand */
 .brand{
   display:flex;
   align-items:center;
@@ -117,35 +111,26 @@ section{ scroll-margin-top: 104px; }
   font-weight:800;
   font-size:14px;
   white-space:nowrap;
-  flex: 0 0 auto; /* left fixed */
 }
 .dot{
   width:10px;height:10px;border-radius:999px;
   background:var(--accent);
 }
 
-/* Center nav wrapper takes remaining space and centers nav group */
+/* CENTER: nav wrapper (centers nav group) */
 .nav-wrap{
-  flex: 1 1 auto;
+  flex:1;
   display:flex;
-  justify-content:center; /* ✅ center group */
-  min-width: 0;
+  justify-content:center; /* ✅ nav centered */
 }
 
-/* nav group */
+/* nav links as a centered group */
 .nav{
   display:flex;
-  gap:10px;
   align-items:center;
-  flex-wrap:nowrap;
-  overflow-x:auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width:none;
+  gap:10px;              /* ✅ clean spacing */
 }
-.nav::-webkit-scrollbar{ display:none; }
-
 .nav a{
-  flex:0 0 auto;
   font-size:13px;
   padding:8px 12px;
   border-radius:999px;
@@ -155,15 +140,14 @@ section{ scroll-margin-top: 104px; }
 }
 .nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* Right controls fixed */
+/* RIGHT: controls (always far right) */
 .controls{
-  flex: 0 0 auto;
+  margin-left:auto;       /* ✅ ensures right alignment */
   display:flex;
   align-items:center;
   gap:10px;
+  flex-shrink:0;
 }
-
-/* Icon buttons */
 .icon-btn{
   width:40px;height:40px;
   display:grid;
@@ -173,33 +157,32 @@ section{ scroll-margin-top: 104px; }
   cursor:pointer;
   transition:.2s ease;
   padding:0;
-  color: var(--icon); /* ✅ black in light, white in dark */
-  border:none;        /* ✅ no border */
+  border:none;            /* ✅ no border */
+  color: var(--icon);     /* ✅ black in light, white in dark */
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
 .icon-btn svg{ width:18px; height:18px; stroke: currentColor; }
 .icon-btn svg *{ stroke: currentColor; }
 
-#menuBtn{ display:none; } /* hamburger only on mobile */
+/* Hamburger default hidden (only mobile shows) */
+#menuBtn{ display:none; }
 
-/* ===================== MOBILE MENU (NO BORDER) ===================== */
+/* ===================== MOBILE MENU ===================== */
 .mobile-menu{
   display:none;
   position:fixed;
   z-index:49;
 
-  top: calc(var(--page-pad) + 66px);
+  top: calc(var(--page-pad) + 62px);
   left: var(--page-pad);
   right: var(--page-pad);
 
   padding:12px 14px 14px;
   background:var(--topbar);
   backdrop-filter:blur(14px);
-  border-radius:18px;
-  box-shadow: var(--shadow-soft);
+  border-radius:18px; /* ✅ no border */
 }
 .mobile-menu.open{ display:block; }
-
 .mobile-links{
   max-width:var(--max);
   margin:0 auto;
@@ -220,7 +203,7 @@ section{ scroll-margin-top: 104px; }
 .container{
   max-width:var(--max);
   margin:auto;
-  padding: calc(96px + var(--content-pad)) var(--content-pad) 80px;
+  padding: calc(92px + var(--content-pad)) var(--content-pad) 80px;
 }
 
 /* ===================== HERO ===================== */
@@ -283,7 +266,6 @@ html[data-theme="dark"] .badge{
 /* Profile */
 .hero-right{ display:flex; justify-content:center; }
 .profile{
-  position:relative;
   width:260px;
   aspect-ratio:1;
   border-radius:999px;
@@ -461,7 +443,7 @@ html[data-theme="dark"] .work-thumb{
 .fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:800; }
 .fact span{ color:var(--muted); font-size:14px; }
 
-/* ===================== FOOTER ===================== */
+/* ===================== FOOTER / CONTACT ===================== */
 .footer{
   text-align:center;
   padding-top:70px;
@@ -484,13 +466,18 @@ html[data-theme="dark"] .work-thumb{
     --content-pad:18px;
   }
 
-  /* hide centered nav in mobile */
+  /* ✅ hide centered nav on mobile */
   .nav-wrap{ display:none; }
 
-  /* show hamburger */
+  /* ✅ show hamburger only on mobile */
   #menuBtn{ display:grid; }
 
-  .container{ padding: calc(92px + var(--content-pad)) var(--content-pad) 70px; }
+  /* ✅ keep brand left & controls right */
+  .topbar-inner{
+    justify-content:space-between;
+  }
+
+  .container{ padding: calc(90px + var(--content-pad)) var(--content-pad) 70px; }
 
   .hero{
     grid-template-columns:1fr;
@@ -519,16 +506,15 @@ html[data-theme="dark"] .work-thumb{
     <!-- TOP BAR -->
     <div class="topbar">
       <div class="topbar-inner">
-
-        <!-- LEFT: NAME -->
+        <!-- LEFT -->
         <div class="brand">
           <span class="dot"></span>
           <span>Siddhant Yadav</span>
         </div>
 
-        <!-- CENTER: NAV -->
-        <div class="nav-wrap" aria-label="Primary navigation wrapper">
-          <nav class="nav" aria-label="Primary navigation">
+        <!-- CENTER (DESKTOP ONLY) -->
+        <div class="nav-wrap" aria-label="Primary navigation">
+          <nav class="nav">
             <a href="#what">What I Do</a>
             <a href="#process">How I Work</a>
             <a href="#showcase">Work</a>
@@ -537,12 +523,14 @@ html[data-theme="dark"] .work-thumb{
           </nav>
         </div>
 
-        <!-- RIGHT: THEME then (mobile) hamburger -->
+        <!-- RIGHT -->
         <div class="controls" aria-label="Topbar controls">
+          <!-- Theme (always visible) -->
           <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
             <span id="themeIcon" aria-hidden="true"></span>
           </button>
 
+          <!-- Hamburger (mobile only; appears to the right of theme) -->
           <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -551,7 +539,6 @@ html[data-theme="dark"] .work-thumb{
             </svg>
           </button>
         </div>
-
       </div>
     </div>
 
@@ -572,13 +559,10 @@ html[data-theme="dark"] .work-thumb{
       <section class="hero">
         <div class="hero-left">
           <span class="badge fade">Available for Freelance</span>
-
           <h1 class="fade">Minimal, usable UI design for SaaS & eCommerce products.</h1>
-
           <p class="fade">
             I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.
           </p>
-
           <div class="cta fade">
             <a href="#contact" class="btn primary">Email Me</a>
             <a href="#showcase" class="btn">View Work</a>
@@ -830,11 +814,13 @@ html[data-theme="dark"] .work-thumb{
   function closeMenu(){
     mobileMenu.classList.remove("open");
     menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "Open menu");
   }
 
   function openMenu(){
     mobileMenu.classList.add("open");
     menuBtn.setAttribute("aria-expanded", "true");
+    menuBtn.setAttribute("aria-label", "Close menu");
   }
 
   menuBtn.addEventListener("click", () => {
@@ -842,14 +828,17 @@ html[data-theme="dark"] .work-thumb{
     isOpen ? closeMenu() : openMenu();
   });
 
+  // Close menu when clicking a link
   document.querySelectorAll("[data-close-menu]").forEach(a => {
     a.addEventListener("click", closeMenu);
   });
 
+  // Close on Escape
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeMenu();
   });
 
+  // Close if resized to desktop
   window.addEventListener("resize", () => {
     if (window.innerWidth > 900) closeMenu();
   });
