@@ -7,8 +7,8 @@
 <meta name="description" content="Siddhant Yadav — UI/UX Designer for SaaS & eCommerce. Minimal, usable, build-ready interfaces with a clear process." />
 
 <style>
-/* ===================== THEME ===================== */
-/* LIGHT DEFAULT */
+/* ===================== THEME TOKENS ===================== */
+/* 🌤 LIGHT MODE (DEFAULT) */
 :root{
   --bg:#f7f8fb;
   --panel:rgba(15,20,30,.04);
@@ -17,9 +17,18 @@
   --muted:#4b5567;
   --accent:#0aa384;
   --border:rgba(15,20,30,.10);
+
   --shadow:0 12px 30px rgba(15,20,30,.10);
+  --radius:20px;
+  --max:1100px;
+
+  --topbar:rgba(247,248,251,.75);
+  --topbar-border:rgba(15,20,30,.10);
+
+  --focus: rgba(10,163,132,.35);
 }
 
+/* 🌙 DARK MODE */
 html[data-theme="dark"]{
   --bg:#0c0f14;
   --panel:rgba(255,255,255,.02);
@@ -28,102 +37,111 @@ html[data-theme="dark"]{
   --muted:#9aa2b2;
   --accent:#8eead0;
   --border:rgba(255,255,255,.07);
+
   --shadow:0 18px 40px rgba(0,0,0,.35);
+
+  --topbar:rgba(12,15,20,.60);
+  --topbar-border:rgba(255,255,255,.06);
+
+  --focus: rgba(142,234,208,.40);
 }
 
 /* ===================== BASE ===================== */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family:Inter,system-ui,sans-serif;
-  background:var(--bg);
+  font-family: Inter, system-ui, sans-serif;
+  background:
+    radial-gradient(900px 420px at 20% -10%, rgba(10,163,132,.08), transparent 60%),
+    radial-gradient(900px 420px at 80% -10%, rgba(120,130,255,.08), transparent 60%),
+    var(--bg);
   color:var(--text);
   line-height:1.6;
+  overflow-x:hidden;
 }
+img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
-img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
 
 .container{
-  max-width:1100px;
+  max-width:var(--max);
   margin:auto;
-  padding:96px 24px 80px;
+  padding:88px 24px 80px;
 }
-section{scroll-margin-top:90px}
 
-/* ===================== TOPBAR ===================== */
+/* Better anchor spacing below fixed topbar */
+section{ scroll-margin-top: 92px; }
+
+/* ===================== TOP BAR ===================== */
 .topbar{
   position:fixed;
-  top:0;left:0;right:0;
-  background:var(--bg);
-  border-bottom:1px solid var(--border);
+  inset:0 0 auto 0;
   z-index:50;
+  backdrop-filter:blur(12px);
+  background:var(--topbar);
+  border-bottom:1px solid var(--topbar-border);
 }
 .topbar-inner{
-  max-width:1100px;
+  max-width:var(--max);
   margin:auto;
   padding:12px 24px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:12px;
 }
-.brand{font-weight:700;font-size:14px}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  font-size:14px;
+  white-space:nowrap;
+}
+.dot{
+  width:10px;height:10px;border-radius:999px;
+  background:var(--accent);
+}
 
-/* Desktop nav */
+/* Nav is always visible (desktop + mobile). On mobile it can scroll horizontally. */
 .nav{
   display:flex;
   gap:10px;
   align-items:center;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.nav::-webkit-scrollbar{ display:none; }
+
 .nav a{
+  flex-shrink:0;
   font-size:13px;
   padding:8px 12px;
   border-radius:999px;
   border:1px solid var(--border);
   background:var(--panel);
+  transition:.2s ease;
+  white-space:nowrap;
 }
+.nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* Icon buttons */
-.icon-btn{
-  width:34px;
-  height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:16px;
+/* Theme button: invert by theme */
+.theme-btn{
+  flex-shrink:0;
+  font-size:13px;
+  font-weight:700;
+  padding:8px 14px;
   border-radius:999px;
-  border:1px solid var(--border);
-  background:var(--panel);
   cursor:pointer;
+  border:none;
+  transition:.2s ease;
+  white-space:nowrap;
 }
-
-/* Mobile actions */
-.mobile-actions{
-  display:none;
-  gap:10px;
-  align-items:center;
-}
-
-/* Mobile menu */
-.mobile-menu{
-  display:none;
-  position:fixed;
-  top:60px;
-  left:0;
-  right:0;
-  background:var(--bg);
-  border-bottom:1px solid var(--border);
-  padding:16px;
-  z-index:40;
-}
-.mobile-menu a{
-  display:block;
-  padding:12px;
-  margin-bottom:10px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  text-align:center;
-}
+html:not([data-theme="dark"]) .theme-btn{ background:#000; color:#fff; }
+html[data-theme="dark"] .theme-btn{ background:#fff; color:#000; }
+.theme-btn:hover{ transform:translateY(-1px); }
 
 /* ===================== HERO ===================== */
 .hero{
@@ -133,87 +151,260 @@ section{scroll-margin-top:90px}
   align-items:center;
   margin-bottom:96px;
 }
-.hero-left{display:flex;flex-direction:column;gap:14px}
+.hero-left{ display:flex; flex-direction:column; gap:14px; }
+
 .badge{
   font-size:13px;
   padding:6px 14px;
   border-radius:999px;
-  background:rgba(10,163,132,.1);
+  background:rgba(10,163,132,.10);
   color:var(--accent);
   width:fit-content;
+  border:1px solid rgba(10,163,132,.18);
 }
+html[data-theme="dark"] .badge{
+  background:rgba(142,234,208,.10);
+  border-color: rgba(142,234,208,.18);
+}
+
 .hero h1{
   font-size:clamp(34px,5vw,54px);
-  font-weight:700;
+  font-weight:750;
+  letter-spacing:-.03em;
+  line-height:1.1;
 }
-.hero p{font-size:18px;color:var(--muted)}
-.cta{display:flex;gap:10px;flex-wrap:wrap}
+.hero p{
+  font-size:18px;
+  color:var(--muted);
+  max-width:640px;
+}
+.cta{
+  display:flex;
+  gap:10px;
+  margin-top:6px;
+  flex-wrap:wrap;
+}
 .btn{
   padding:12px 18px;
   border-radius:999px;
+  font-size:14px;
   border:1px solid var(--border);
   background:var(--panel);
+  transition:.2s ease;
+  user-select:none;
+  white-space:nowrap;
 }
 .btn.primary{
   background:var(--accent);
   color:#02140e;
   border:none;
-  font-weight:600;
+  font-weight:750;
 }
+.btn:hover{ transform:translateY(-2px); background:var(--panel2); }
+.btn.primary:hover{ background:var(--accent); }
 
-.hero-right{display:flex;justify-content:center}
+/* Profile */
+.hero-right{ display:flex; justify-content:center; }
 .profile{
+  position:relative;
   width:260px;
   aspect-ratio:1;
   border-radius:999px;
   overflow:hidden;
   border:1px solid var(--border);
+  background:var(--panel);
   box-shadow:var(--shadow);
 }
+.profile img{ width:100%; height:100%; object-fit:cover; }
 
 /* ===================== SECTIONS ===================== */
-.section{margin-bottom:96px}
-.section h2{font-size:26px;margin-bottom:10px}
-.section-lead{color:var(--muted);margin-bottom:24px}
+.section{ margin-bottom:92px; }
+.section h2{
+  font-size:26px;
+  font-weight:800;
+  margin-bottom:10px;
+  letter-spacing:-.01em;
+}
+.section-lead{
+  color:var(--muted);
+  margin-bottom:22px;
+  max-width:780px;
+  font-size:16px;
+}
 
 /* ===================== GRIDS ===================== */
-.grid,.work-grid{
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:22px;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+@media(max-width:980px){
+  .grid{ grid-template-columns:1fr; }
 }
 
 /* ===================== CARDS ===================== */
-.card,.step,.work-card,.about,.fact{
+.card{
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:20px;
-  padding:22px;
+  border-radius:var(--radius);
+  padding:20px;
+  transition:.25s ease;
 }
-.work-card{padding:0;overflow:hidden}
-.work-thumb{padding:16px;border-bottom:1px solid var(--border)}
-.work-thumb img{height:200px;object-fit:contain;width:100%}
+.card:hover{
+  transform:translateY(-6px);
+  background:var(--panel2);
+}
+.card h3{
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:8px;
+}
+.card p{ color:var(--muted); font-size:14.5px; }
+
+/* ===================== PROCESS ===================== */
+.step{
+  position:relative;
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+}
+.step::before{
+  content:"";
+  position:absolute;
+  inset:-60%;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(10,163,132,.10), transparent 42%),
+    radial-gradient(circle at 75% 70%, rgba(120,130,255,.09), transparent 44%);
+  animation: slow-pan 18s linear infinite;
+}
+html[data-theme="dark"] .step::before{
+  background:
+    radial-gradient(circle at 25% 25%, rgba(142,234,208,.10), transparent 42%),
+    radial-gradient(circle at 75% 70%, rgba(170,180,255,.08), transparent 44%);
+}
+@keyframes slow-pan{ from{transform:translate(0,0)} to{transform:translate(80px,60px)} }
+.step-inner{ position:relative; z-index:1; }
+.kicker{
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(15,20,30,.65);
+  margin-bottom:10px;
+}
+html[data-theme="dark"] .kicker{ color: rgba(238,241,246,.75); }
+.step h3{ font-size:16px; font-weight:800; margin-bottom:8px; }
+.step p{ color:var(--muted); font-size:14.5px; }
+.step ul{
+  margin-top:12px;
+  padding-left:18px;
+  color:var(--muted);
+  font-size:14px;
+}
+.step li{ margin:6px 0; }
+
+/* ===================== WORK SHOWCASE ===================== */
+.work-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+@media(max-width:980px){
+  .work-grid{ grid-template-columns:1fr; }
+}
+
+.work-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:.25s ease;
+}
+.work-card:hover{ transform:translateY(-6px); background:var(--panel2); }
+
+.work-thumb{
+  padding:16px;
+  border-bottom:1px solid var(--border);
+  background:
+    radial-gradient(500px 220px at 20% 0%, rgba(10,163,132,.10), transparent 60%),
+    radial-gradient(500px 220px at 80% 0%, rgba(120,130,255,.08), transparent 60%),
+    var(--panel);
+}
+html[data-theme="dark"] .work-thumb{
+  background:
+    radial-gradient(500px 220px at 20% 0%, rgba(142,234,208,.10), transparent 60%),
+    radial-gradient(500px 220px at 80% 0%, rgba(170,180,255,.08), transparent 60%),
+    var(--panel);
+}
+.work-thumb img{
+  width:100%;
+  height:210px;
+  object-fit:contain;
+  transition: transform .35s ease;
+}
+.work-card:hover .work-thumb img{ transform:scale(1.03); }
+
+.work-body{
+  padding:16px 18px 18px;
+}
+.work-body h3{
+  font-size:16px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+.work-body p{ color:var(--muted); font-size:14px; }
 
 /* ===================== ABOUT ===================== */
 .about-wrap{
   display:grid;
-  grid-template-columns:1.2fr .8fr;
+  grid-template-columns: 1.2fr .8fr;
   gap:16px;
+  align-items:start;
 }
+@media(max-width:980px){
+  .about-wrap{ grid-template-columns:1fr; }
+}
+.about{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  color:var(--muted);
+  font-size:15.5px;
+}
+.about strong{ color:var(--text); font-weight:850; }
+
+.facts{
+  display:grid;
+  gap:12px;
+}
+.fact{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+}
+.fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:800; }
+.fact span{ color:var(--muted); font-size:14px; }
 
 /* ===================== FOOTER ===================== */
 .footer{
   text-align:center;
-  padding-top:64px;
+  padding-top:70px;
   border-top:1px solid var(--border);
 }
+.footer h2{ font-size:28px; font-weight:900; margin-bottom:10px; }
+.footer p{ color:var(--muted); margin-bottom:20px; font-size:15px; }
 
-
-/* Reduced motion */
-@media(prefers-reduced-motion:reduce){
-  html{ scroll-behavior:auto; }
-  *{ animation:none!important; transition:none!important; }
+/* ===================== REVEAL ===================== */
+.fade{
+  opacity:0;
+  transform:translateY(20px);
+  transition: 900ms ease;
 }
+.fade.show{ opacity:1; transform:translateY(0); }
+
 /* ===================== MOBILE ===================== */
 @media(max-width:900px){
   .container{ padding:86px 18px 70px; }
@@ -228,72 +419,64 @@ section{scroll-margin-top:90px}
   .badge{ margin:0 auto; }
   .cta{ justify-content:center; }
 }
- 
- 
 
-  .nav{display:none}
-  .mobile-actions{display:flex}
-
-  .about-wrap{grid-template-columns:1fr}
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none!important; transition:none!important; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- TOPBAR -->
+<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand">Siddhant Yadav</div>
-
-    <!-- Desktop nav -->
-    <nav class="nav">
+    <div class="brand">
+      <span class="dot"></span>
+      <span>Siddhant Yadav</span>
+    </div>
+    <div class="nav" aria-label="Primary navigation">
       <a href="#what">What I Do</a>
       <a href="#process">How I Work</a>
       <a href="#showcase">Work</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
-      <button class="icon-btn" id="themeBtn">🌙</button>
-    </nav>
-
-    <!-- Mobile actions -->
-    <div class="mobile-actions">
-      <button class="icon-btn" id="themeBtnMobile">🌙</button>
-      <button class="icon-btn" id="menuBtn">☰</button>
+      <button class="theme-btn" id="themeBtn" type="button">Dark</button>
     </div>
   </div>
-</div>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#what">What I Do</a>
-  <a href="#process">How I Work</a>
-  <a href="#showcase">Work</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
 </div>
 
 <div class="container">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <span class="badge">Available for Freelance</span>
-    <h1>Minimal, usable UI design for SaaS & eCommerce products.</h1>
-    <p>I design clean interfaces that are easy to use and easy to build.</p>
-    <div class="cta">
-      <a href="#contact" class="btn primary">Email Me</a>
-      <a href="#showcase" class="btn">View Work</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="profile">
-      <img src="https://cdn2.f-cdn.com/ppic/239876269/logo/74203495/NvIz8/CROPPED_profile_logo_LinkedIn_74203495.jpg" alt="Siddhant Yadav">
-    </div>
-  </div>
-</section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <span class="badge fade">Available for Freelance</span>
 
-<!-- WHAT I DO -->
+      <h1 class="fade">Minimal, usable UI design for SaaS & eCommerce products.</h1>
+
+      <p class="fade">
+        I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.
+      </p>
+
+      <div class="cta fade">
+        <a href="#contact" class="btn primary">Email Me</a>
+        <a href="#showcase" class="btn">View Work</a>
+        <a href="#process" class="btn">How I Work</a>
+        <a href="#about" class="btn">About</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="profile fade">
+        <img src="https://cdn2.f-cdn.com/ppic/239876269/logo/74203495/NvIz8/CROPPED_profile_logo_LinkedIn_74203495.jpg?image-optimizer=force&format=webply&width=560" alt="Siddhant Yadav">
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
   <section id="what" class="section">
     <h2 class="fade">What I Do</h2>
     <p class="section-lead fade">
@@ -458,43 +641,42 @@ section{scroll-margin-top:90px}
 </div>
 
 <script>
-/* THEME TOGGLE */
-const root=document.documentElement;
-const btns=[
-  document.getElementById("themeBtn"),
-  document.getElementById("themeBtnMobile")
-];
-const saved=localStorage.getItem("theme");
-if(saved==="dark") root.setAttribute("data-theme","dark");
+  // Reveal on scroll
+  const els = document.querySelectorAll(".fade");
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add("show");
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el => io.observe(el));
 
-function updateIcon(){
-  const dark=root.getAttribute("data-theme")==="dark";
-  btns.forEach(b=>b.textContent=dark?"☀️":"🌙");
-}
-updateIcon();
+  // Light default, toggle to dark (persist)
+  const btn = document.getElementById("themeBtn");
+  const saved = localStorage.getItem("theme");
 
-btns.forEach(b=>{
-  b.onclick=()=>{
-    const dark=root.getAttribute("data-theme")==="dark";
-    if(dark){
-      root.removeAttribute("data-theme");
-      localStorage.setItem("theme","light");
-    }else{
-      root.setAttribute("data-theme","dark");
-      localStorage.setItem("theme","dark");
+  if (saved === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+
+  function updateLabel(){
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    btn.textContent = isDark ? "Light" : "Dark"; // indicates next action
+  }
+
+  function toggleTheme(){
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (isDark) {
+      document.documentElement.removeAttribute("data-theme");
+      localStorage.setItem("theme", "light");
+    } else {
+      document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("theme", "dark");
     }
-    updateIcon();
-  };
-});
+    updateLabel();
+  }
 
-/* MOBILE MENU */
-const menu=document.getElementById("mobileMenu");
-document.getElementById("menuBtn").onclick=()=>{
-  menu.style.display=menu.style.display==="block"?"none":"block";
-};
-menu.querySelectorAll("a").forEach(a=>{
-  a.onclick=()=>menu.style.display="none";
-});
+  btn.addEventListener("click", toggleTheme);
+  updateLabel();
 </script>
 
 </body>
