@@ -40,7 +40,7 @@ html[data-theme="dark"]{
 
   --shadow:0 18px 40px rgba(0,0,0,.35);
 
-  --topbar:rgba(12,15,20,.6);
+  --topbar:rgba(12,15,20,.60);
   --topbar-border:rgba(255,255,255,.06);
 
   --focus: rgba(142,234,208,.40);
@@ -94,7 +94,7 @@ section{ scroll-margin-top: 92px; }
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:650;
+  font-weight:700;
   font-size:14px;
   white-space:nowrap;
 }
@@ -102,41 +102,45 @@ section{ scroll-margin-top: 92px; }
   width:10px;height:10px;border-radius:999px;
   background:var(--accent);
 }
+
+/* Nav is always visible (desktop + mobile). On mobile it can scroll horizontally. */
 .nav{
   display:flex;
   gap:10px;
   align-items:center;
-  flex-wrap:wrap;
-  justify-content:flex-end;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.nav::-webkit-scrollbar{ display:none; }
+
 .nav a{
+  flex-shrink:0;
   font-size:13px;
   padding:8px 12px;
   border-radius:999px;
   border:1px solid var(--border);
   background:var(--panel);
   transition:.2s ease;
+  white-space:nowrap;
 }
 .nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* Theme button: invert */
+/* Theme button: invert by theme */
 .theme-btn{
+  flex-shrink:0;
   font-size:13px;
-  font-weight:650;
+  font-weight:700;
   padding:8px 14px;
   border-radius:999px;
   cursor:pointer;
   border:none;
   transition:.2s ease;
+  white-space:nowrap;
 }
-html:not([data-theme="dark"]) .theme-btn{
-  background:#000;
-  color:#fff;
-}
-html[data-theme="dark"] .theme-btn{
-  background:#fff;
-  color:#000;
-}
+html:not([data-theme="dark"]) .theme-btn{ background:#000; color:#fff; }
+html[data-theme="dark"] .theme-btn{ background:#fff; color:#000; }
 .theme-btn:hover{ transform:translateY(-1px); }
 
 /* ===================== HERO ===================== */
@@ -165,7 +169,7 @@ html[data-theme="dark"] .badge{
 
 .hero h1{
   font-size:clamp(34px,5vw,54px);
-  font-weight:700;
+  font-weight:750;
   letter-spacing:-.03em;
   line-height:1.1;
 }
@@ -188,12 +192,13 @@ html[data-theme="dark"] .badge{
   background:var(--panel);
   transition:.2s ease;
   user-select:none;
+  white-space:nowrap;
 }
 .btn.primary{
   background:var(--accent);
   color:#02140e;
   border:none;
-  font-weight:700;
+  font-weight:750;
 }
 .btn:hover{ transform:translateY(-2px); background:var(--panel2); }
 .btn.primary:hover{ background:var(--accent); }
@@ -216,7 +221,7 @@ html[data-theme="dark"] .badge{
 .section{ margin-bottom:92px; }
 .section h2{
   font-size:26px;
-  font-weight:700;
+  font-weight:800;
   margin-bottom:10px;
   letter-spacing:-.01em;
 }
@@ -251,7 +256,7 @@ html[data-theme="dark"] .badge{
 }
 .card h3{
   font-size:16px;
-  font-weight:700;
+  font-weight:800;
   margin-bottom:8px;
 }
 .card p{ color:var(--muted); font-size:14.5px; }
@@ -289,7 +294,7 @@ html[data-theme="dark"] .step::before{
   margin-bottom:10px;
 }
 html[data-theme="dark"] .kicker{ color: rgba(238,241,246,.75); }
-.step h3{ font-size:16px; font-weight:700; margin-bottom:8px; }
+.step h3{ font-size:16px; font-weight:800; margin-bottom:8px; }
 .step p{ color:var(--muted); font-size:14.5px; }
 .step ul{
   margin-top:12px;
@@ -345,7 +350,7 @@ html[data-theme="dark"] .work-thumb{
 }
 .work-body h3{
   font-size:16px;
-  font-weight:700;
+  font-weight:800;
   margin-bottom:6px;
 }
 .work-body p{ color:var(--muted); font-size:14px; }
@@ -368,7 +373,7 @@ html[data-theme="dark"] .work-thumb{
   color:var(--muted);
   font-size:15.5px;
 }
-.about strong{ color:var(--text); font-weight:750; }
+.about strong{ color:var(--text); font-weight:850; }
 
 .facts{
   display:grid;
@@ -380,7 +385,7 @@ html[data-theme="dark"] .work-thumb{
   border-radius:var(--radius);
   padding:16px;
 }
-.fact b{ display:block; font-size:13px; margin-bottom:6px; }
+.fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:800; }
 .fact span{ color:var(--muted); font-size:14px; }
 
 /* ===================== FOOTER ===================== */
@@ -389,7 +394,7 @@ html[data-theme="dark"] .work-thumb{
   padding-top:70px;
   border-top:1px solid var(--border);
 }
-.footer h2{ font-size:28px; font-weight:800; margin-bottom:10px; }
+.footer h2{ font-size:28px; font-weight:900; margin-bottom:10px; }
 .footer p{ color:var(--muted); margin-bottom:20px; font-size:15px; }
 
 /* ===================== REVEAL ===================== */
@@ -413,12 +418,6 @@ html[data-theme="dark"] .work-thumb{
   .hero-right{ order:-1; } /* profile on top */
   .badge{ margin:0 auto; }
   .cta{ justify-content:center; }
-
-  /* Reduce CTA clutter a bit on mobile */
-  .cta .hide-mobile{ display:none; }
-
-  /* Topbar: hide nav links but keep theme button */
-  .nav a{ display:none; }
 }
 
 /* Reduced motion */
@@ -438,7 +437,7 @@ html[data-theme="dark"] .work-thumb{
       <span class="dot"></span>
       <span>Siddhant Yadav</span>
     </div>
-    <div class="nav">
+    <div class="nav" aria-label="Primary navigation">
       <a href="#what">What I Do</a>
       <a href="#process">How I Work</a>
       <a href="#showcase">Work</a>
@@ -465,8 +464,8 @@ html[data-theme="dark"] .work-thumb{
       <div class="cta fade">
         <a href="#contact" class="btn primary">Email Me</a>
         <a href="#showcase" class="btn">View Work</a>
-        <a href="#process" class="btn hide-mobile">How I Work</a>
-        <a href="#about" class="btn hide-mobile">About</a>
+        <a href="#process" class="btn">How I Work</a>
+        <a href="#about" class="btn">About</a>
       </div>
     </div>
 
@@ -635,7 +634,7 @@ html[data-theme="dark"] .work-thumb{
     <p class="fade">Available for redesigns, UI improvements, and ongoing product design work.</p>
     <div class="cta fade" style="justify-content:center;">
       <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
-      <a href="https://www.freelancer.com/u/siddhant84" class="btn">Freelancer Profile</a>
+      <a href="https://www.freelancer.com/u/siddhant84" class="btn" target="_blank" rel="noreferrer">Freelancer Profile</a>
     </div>
   </section>
 
