@@ -12,36 +12,37 @@
 :root{
   --bg:#f7f8fb;
   --panel:rgba(15,20,30,.04);
-  --panel2:rgba(15,20,30,.08);
+  --panel2:rgba(15,20,30,.07);
   --text:#0f1420;
   --muted:#4b5567;
   --accent:#0aa384;
 
-  --shadow:0 22px 70px rgba(15,20,30,.14);
+  --shadow:0 18px 48px rgba(15,20,30,.12);
   --radius:20px;
   --max:1100px;
 
   --topbar:rgba(247,248,251,.72);
   --focus: rgba(10,163,132,.35);
 
-  /* icons by theme */
+  /* icon color by theme */
   --icon:#000;
 
   /* fullscreen layout */
-  --page-pad:16px;       /* outer margin around whole page */
-  --content-pad:24px;    /* inner padding in shell */
+  --page-pad:16px;     /* outer margin */
+  --content-pad:24px;  /* inner padding */
 }
 
 /* 🌙 DARK MODE */
 html[data-theme="dark"]{
   --bg:#0c0f14;
   --panel:rgba(255,255,255,.03);
-  --panel2:rgba(255,255,255,.08);
+  --panel2:rgba(255,255,255,.07);
   --text:#eef1f6;
   --muted:#9aa2b2;
   --accent:#8eead0;
 
-  --shadow:0 26px 90px rgba(0,0,0,.55);
+  --shadow:0 24px 60px rgba(0,0,0,.50);
+
   --topbar:rgba(12,15,20,.64);
   --focus: rgba(142,234,208,.40);
 
@@ -61,18 +62,12 @@ body{
 }
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
 
-/* Focus */
-:focus-visible{
-  outline:3px solid var(--focus);
-  outline-offset:3px;
-  border-radius:12px;
-}
+/* better anchors under fixed topbar */
+section{ scroll-margin-top: 104px; }
 
-/* Better anchor spacing below fixed topbar */
-section{ scroll-margin-top: 96px; }
-
-/* ===================== FULLSCREEN PAGE SHELL (NO BORDERS) ===================== */
+/* ===================== FULLSCREEN SHELL (NO BORDERS) ===================== */
 .page{
   min-height:100vh;
   padding: var(--page-pad);
@@ -80,9 +75,7 @@ section{ scroll-margin-top: 96px; }
 .shell{
   min-height: calc(100vh - (var(--page-pad) * 2));
   border-radius: 24px;
-  border:none;                 /* ✅ no border */
-  outline:none;                /* ✅ no border-like outline */
-  box-shadow: var(--shadow);   /* keep soft shadow */
+  box-shadow: var(--shadow);
   background:
     radial-gradient(900px 420px at 20% -10%, rgba(10,163,132,.10), transparent 60%),
     radial-gradient(900px 420px at 80% -10%, rgba(120,130,255,.10), transparent 60%),
@@ -90,27 +83,34 @@ section{ scroll-margin-top: 96px; }
   overflow:hidden;
 }
 
-/* ===================== TOP BAR (NO BORDER) ===================== */
+/* ===================== TOP BAR (3-COLUMN: LEFT / CENTER / RIGHT) ===================== */
 .topbar{
   position:fixed;
   z-index:50;
   top: var(--page-pad);
   left: var(--page-pad);
   right: var(--page-pad);
-  backdrop-filter:blur(14px);
-  background:var(--topbar);
-  border:none;        /* ✅ no border */
-  outline:none;       /* ✅ no outline */
+
+  backdrop-filter: blur(14px);
+  background: var(--topbar);
+
+  /* ✅ no border */
+  border:none;
   border-radius:18px;
 }
+
+/* ✅ Grid guarantees center nav stays centered */
 .topbar-inner{
-  max-width:var(--max);
-  margin:auto;
-  padding:12px 18px;
-  display:flex;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 12px 18px;
+
+  display:grid;
+  grid-template-columns: auto 1fr auto;
   align-items:center;
-  gap:16px;
+  gap: 12px;
 }
+
 .brand{
   display:flex;
   align-items:center;
@@ -118,43 +118,38 @@ section{ scroll-margin-top: 96px; }
   font-weight:800;
   font-size:14px;
   white-space:nowrap;
-  flex-shrink:0;
 }
 .dot{
   width:10px;height:10px;border-radius:999px;
   background:var(--accent);
 }
 
-/* ===================== NAV (TRUE SPACE-BETWEEN) ===================== */
-/* Key: nav must expand, and links must NOT be flex:1 pills (keep natural size) */
+/* center nav */
 .nav{
-  flex:1;                           /* ✅ takes remaining space */
-  max-width: 560px;                 /* keeps nav centered-ish */
   display:flex;
+  justify-content:center;
   align-items:center;
-  justify-content:space-between;    /* ✅ requested */
-  gap:18px;                         /* fallback spacing if space-between tight */
-  margin:0 10px;
+  gap:10px;
+  min-width: 0;
 }
 .nav a{
   font-size:13px;
-  padding:8px 14px;
+  padding:8px 12px;
   border-radius:999px;
   background:var(--panel);
-  border:none;                      /* ✅ no border on pills */
-  outline:none;
   transition:.2s ease;
   white-space:nowrap;
 }
 .nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* ===================== CONTROLS ===================== */
+/* right controls */
 .controls{
   display:flex;
   align-items:center;
   gap:10px;
-  flex-shrink:0;
 }
+
+/* icon buttons (no borders) */
 .icon-btn{
   width:40px;height:40px;
   display:grid;
@@ -164,15 +159,16 @@ section{ scroll-margin-top: 96px; }
   cursor:pointer;
   transition:.2s ease;
   padding:0;
-  color: var(--icon); /* ✅ black in light, white in dark */
-  border:none;        /* ✅ no border */
+
+  color: var(--icon);
+  border:none;           /* ✅ no border */
   outline:none;
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
 .icon-btn svg{ width:18px; height:18px; stroke: currentColor; }
 .icon-btn svg *{ stroke: currentColor; }
 
-/* Hamburger shown only on mobile */
+/* hamburger only on mobile */
 #menuBtn{ display:none; }
 
 /* ===================== MOBILE MENU (NO BORDER) ===================== */
@@ -180,14 +176,16 @@ section{ scroll-margin-top: 96px; }
   display:none;
   position:fixed;
   z-index:49;
+
   top: calc(var(--page-pad) + 62px);
   left: var(--page-pad);
   right: var(--page-pad);
+
   padding:12px 14px 14px;
-  background:var(--topbar);
-  backdrop-filter:blur(14px);
-  border:none;        /* ✅ no border */
-  outline:none;
+  background: var(--topbar);
+  backdrop-filter: blur(14px);
+
+  border:none;           /* ✅ no border */
   border-radius:18px;
 }
 .mobile-menu.open{ display:block; }
@@ -204,8 +202,6 @@ section{ scroll-margin-top: 96px; }
   padding:12px 14px;
   border-radius:14px;
   background:var(--panel);
-  border:none;        /* ✅ no border */
-  outline:none;
   transition:.2s ease;
 }
 .mobile-links a:hover{ background:var(--panel2); transform:translateY(-1px); }
@@ -214,7 +210,7 @@ section{ scroll-margin-top: 96px; }
 .container{
   max-width:var(--max);
   margin:auto;
-  padding: calc(92px + var(--content-pad)) var(--content-pad) 80px;
+  padding: calc(96px + var(--content-pad)) var(--content-pad) 80px;
 }
 
 /* ===================== HERO ===================== */
@@ -234,7 +230,6 @@ section{ scroll-margin-top: 96px; }
   background:rgba(10,163,132,.10);
   color:var(--accent);
   width:fit-content;
-  border:none; /* ✅ */
 }
 html[data-theme="dark"] .badge{
   background:rgba(142,234,208,.10);
@@ -242,7 +237,7 @@ html[data-theme="dark"] .badge{
 
 .hero h1{
   font-size:clamp(34px,5vw,54px);
-  font-weight:750;
+  font-weight:780;
   letter-spacing:-.03em;
   line-height:1.1;
 }
@@ -265,18 +260,16 @@ html[data-theme="dark"] .badge{
   transition:.2s ease;
   user-select:none;
   white-space:nowrap;
-  border:none; /* ✅ */
-  outline:none;
+  border:none; /* ✅ no border */
 }
 .btn.primary{
   background:var(--accent);
   color:#02140e;
-  font-weight:750;
+  font-weight:800;
 }
 .btn:hover{ transform:translateY(-2px); background:var(--panel2); }
 .btn.primary:hover{ background:var(--accent); }
 
-/* Profile */
 .hero-right{ display:flex; justify-content:center; }
 .profile{
   width:260px;
@@ -284,8 +277,6 @@ html[data-theme="dark"] .badge{
   border-radius:999px;
   overflow:hidden;
   background:var(--panel);
-  border:none; /* ✅ */
-  outline:none;
   box-shadow: var(--shadow);
 }
 .profile img{ width:100%; height:100%; object-fit:cover; }
@@ -294,7 +285,7 @@ html[data-theme="dark"] .badge{
 .section{ margin-bottom:92px; }
 .section h2{
   font-size:26px;
-  font-weight:800;
+  font-weight:850;
   margin-bottom:10px;
   letter-spacing:-.01em;
 }
@@ -315,21 +306,18 @@ html[data-theme="dark"] .badge{
   .grid{ grid-template-columns:1fr; }
 }
 
-/* ===================== CARDS (NO BORDER) ===================== */
+/* cards (no borders) */
 .card{
   background:var(--panel);
+  border:none;
   border-radius:var(--radius);
   padding:20px;
   transition:.25s ease;
-  border:none; outline:none; /* ✅ */
 }
-.card:hover{
-  transform:translateY(-6px);
-  background:var(--panel2);
-}
+.card:hover{ transform:translateY(-6px); background:var(--panel2); }
 .card h3{
   font-size:16px;
-  font-weight:800;
+  font-weight:850;
   margin-bottom:8px;
 }
 .card p{ color:var(--muted); font-size:14.5px; }
@@ -339,9 +327,9 @@ html[data-theme="dark"] .badge{
   position:relative;
   overflow:hidden;
   background:var(--panel);
+  border:none;
   border-radius:var(--radius);
   padding:20px;
-  border:none; outline:none; /* ✅ */
 }
 .step::before{
   content:"";
@@ -367,7 +355,7 @@ html[data-theme="dark"] .step::before{
   margin-bottom:10px;
 }
 html[data-theme="dark"] .kicker{ color: rgba(238,241,246,.75); }
-.step h3{ font-size:16px; font-weight:800; margin-bottom:8px; }
+.step h3{ font-size:16px; font-weight:850; margin-bottom:8px; }
 .step p{ color:var(--muted); font-size:14.5px; }
 .step ul{
   margin-top:12px;
@@ -388,13 +376,12 @@ html[data-theme="dark"] .kicker{ color: rgba(238,241,246,.75); }
 }
 .work-card{
   background:var(--panel);
+  border:none;
   border-radius:var(--radius);
   overflow:hidden;
   transition:.25s ease;
-  border:none; outline:none; /* ✅ */
 }
 .work-card:hover{ transform:translateY(-6px); background:var(--panel2); }
-
 .work-thumb{
   padding:16px;
   background:
@@ -416,7 +403,7 @@ html[data-theme="dark"] .work-thumb{
 }
 .work-card:hover .work-thumb img{ transform:scale(1.03); }
 .work-body{ padding:16px 18px 18px; }
-.work-body h3{ font-size:16px; font-weight:800; margin-bottom:6px; }
+.work-body h3{ font-size:16px; font-weight:850; margin-bottom:6px; }
 .work-body p{ color:var(--muted); font-size:14px; }
 
 /* ===================== ABOUT ===================== */
@@ -431,22 +418,21 @@ html[data-theme="dark"] .work-thumb{
 }
 .about{
   background:var(--panel);
+  border:none;
   border-radius:var(--radius);
   padding:20px;
   color:var(--muted);
   font-size:15.5px;
-  border:none; outline:none; /* ✅ */
 }
-.about strong{ color:var(--text); font-weight:850; }
-
+.about strong{ color:var(--text); font-weight:900; }
 .facts{ display:grid; gap:12px; }
 .fact{
   background:var(--panel);
+  border:none;
   border-radius:var(--radius);
   padding:16px;
-  border:none; outline:none; /* ✅ */
 }
-.fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:800; }
+.fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:850; }
 .fact span{ color:var(--muted); font-size:14px; }
 
 /* ===================== FOOTER ===================== */
@@ -454,7 +440,7 @@ html[data-theme="dark"] .work-thumb{
   text-align:center;
   padding-top:70px;
 }
-.footer h2{ font-size:28px; font-weight:900; margin-bottom:10px; }
+.footer h2{ font-size:28px; font-weight:950; margin-bottom:10px; }
 .footer p{ color:var(--muted); margin-bottom:20px; font-size:15px; }
 
 /* ===================== REVEAL ===================== */
@@ -472,10 +458,11 @@ html[data-theme="dark"] .work-thumb{
     --content-pad:18px;
   }
 
+  /* hide desktop nav on mobile */
   .nav{ display:none; }
   #menuBtn{ display:grid; }
 
-  .container{ padding: calc(90px + var(--content-pad)) var(--content-pad) 70px; }
+  .container{ padding: calc(92px + var(--content-pad)) var(--content-pad) 70px; }
 
   .hero{
     grid-template-columns:1fr;
@@ -497,17 +484,21 @@ html[data-theme="dark"] .work-thumb{
 </head>
 
 <body>
+
 <div class="page">
   <div class="shell">
 
     <!-- TOP BAR -->
     <div class="topbar">
       <div class="topbar-inner">
+
+        <!-- LEFT -->
         <div class="brand">
           <span class="dot"></span>
           <span>Siddhant Yadav</span>
         </div>
 
+        <!-- CENTER -->
         <nav class="nav" aria-label="Primary navigation">
           <a href="#what">What I Do</a>
           <a href="#process">How I Work</a>
@@ -516,6 +507,7 @@ html[data-theme="dark"] .work-thumb{
           <a href="#contact">Contact</a>
         </nav>
 
+        <!-- RIGHT -->
         <div class="controls" aria-label="Topbar controls">
           <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
             <span id="themeIcon" aria-hidden="true"></span>
@@ -529,6 +521,7 @@ html[data-theme="dark"] .work-thumb{
             </svg>
           </button>
         </div>
+
       </div>
     </div>
 
@@ -580,12 +573,10 @@ html[data-theme="dark"] .work-thumb{
             <h3>SaaS UI/UX Design</h3>
             <p>Dashboards, result pages, onboarding, and component systems with clean hierarchy.</p>
           </div>
-
           <div class="card fade">
             <h3>eCommerce UX</h3>
             <p>Product pages and checkout flows designed to reduce friction and increase conversions.</p>
           </div>
-
           <div class="card fade">
             <h3>Design → Build Support</h3>
             <p>Dev-ready layouts and CMS-friendly components for Shopify & WordPress.</p>
@@ -720,7 +711,7 @@ html[data-theme="dark"] .work-thumb{
         </div>
       </section>
 
-      <!-- FOOTER / CONTACT -->
+      <!-- CONTACT -->
       <section id="contact" class="footer">
         <h2 class="fade">Let’s work together</h2>
         <p class="fade">Available for redesigns, UI improvements, and ongoing product design work.</p>
@@ -744,23 +735,31 @@ html[data-theme="dark"] .work-thumb{
   }, { threshold: 0.15 });
   els.forEach(el => io.observe(el));
 
-  // Theme toggle (icon + persist)
+  // ===== Theme toggle (icon + persist) =====
   const themeBtn = document.getElementById("themeBtn");
   const themeIcon = document.getElementById("themeIcon");
   const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
+
+  if (savedTheme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
 
   function sunIcon(){
     return `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2"></path><path d="M12 20v2"></path>
-        <path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path>
-        <path d="M2 12h2"></path><path d="M20 12h2"></path>
-        <path d="M4.93 19.07l1.41-1.41"></path><path d="M17.66 6.34l1.41-1.41"></path>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="M4.93 4.93l1.41 1.41"></path>
+        <path d="M17.66 17.66l1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="M4.93 19.07l1.41-1.41"></path>
+        <path d="M17.66 6.34l1.41-1.41"></path>
       </svg>
     `;
   }
+
   function moonIcon(){
     return `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -768,10 +767,12 @@ html[data-theme="dark"] .work-thumb{
       </svg>
     `;
   }
+
   function setThemeIcon(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     themeIcon.innerHTML = isDark ? moonIcon() : sunIcon();
   }
+
   function toggleTheme(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     if (isDark) {
@@ -783,10 +784,11 @@ html[data-theme="dark"] .work-thumb{
     }
     setThemeIcon();
   }
+
   themeBtn.addEventListener("click", toggleTheme);
   setThemeIcon();
 
-  // Mobile hamburger menu
+  // ===== Mobile hamburger menu =====
   const menuBtn = document.getElementById("menuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
 
