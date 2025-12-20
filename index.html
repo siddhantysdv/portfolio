@@ -28,7 +28,11 @@
   --focus: rgba(10,163,132,.35);
 
   /* Icon color by theme */
-  --icon:#000; /* light mode icon color */
+  --icon:#000;
+
+  /* Layout */
+  --page-pad:16px;         /* outer margin around the whole page */
+  --content-pad:24px;      /* inner padding inside the page shell */
 }
 
 /* 🌙 DARK MODE */
@@ -48,8 +52,7 @@ html[data-theme="dark"]{
 
   --focus: rgba(142,234,208,.40);
 
-  /* Icon color by theme */
-  --icon:#fff; /* dark mode icon color */
+  --icon:#fff;
 }
 
 /* ===================== BASE ===================== */
@@ -57,22 +60,40 @@ html[data-theme="dark"]{
 html{scroll-behavior:smooth}
 body{
   font-family: Inter, system-ui, sans-serif;
-  background:
-    radial-gradient(900px 420px at 20% -10%, rgba(10,163,132,.08), transparent 60%),
-    radial-gradient(900px 420px at 80% -10%, rgba(120,130,255,.08), transparent 60%),
-    var(--bg);
+  background: var(--bg);
   color:var(--text);
   line-height:1.6;
   overflow-x:hidden;
+  min-height:100vh;
 }
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
 
+/* ===================== FULLSCREEN PAGE SHELL ===================== */
+/* ✅ Full screen with margins: page fills viewport; content sits inside a shell with padding */
+.page{
+  min-height:100vh;
+  padding: var(--page-pad);
+}
+.shell{
+  min-height: calc(100vh - (var(--page-pad) * 2));
+  border-radius: 24px;
+  border:1px solid var(--border);
+  box-shadow: var(--shadow);
+  background:
+    radial-gradient(900px 420px at 20% -10%, rgba(10,163,132,.08), transparent 60%),
+    radial-gradient(900px 420px at 80% -10%, rgba(120,130,255,.08), transparent 60%),
+    var(--bg);
+  overflow:hidden;
+  position:relative;
+}
+
+/* container becomes inner content padding inside shell */
 .container{
   max-width:var(--max);
   margin:auto;
-  padding:88px 24px 80px;
+  padding: calc(88px + var(--content-pad)) var(--content-pad) 80px;
 }
 
 /* Better anchor spacing below fixed topbar */
@@ -81,16 +102,22 @@ section{ scroll-margin-top: 92px; }
 /* ===================== TOP BAR ===================== */
 .topbar{
   position:fixed;
-  inset:0 0 auto 0;
   z-index:50;
+
+  /* ✅ align topbar to the shell with the outer margin */
+  top: var(--page-pad);
+  left: var(--page-pad);
+  right: var(--page-pad);
+
   backdrop-filter:blur(12px);
   background:var(--topbar);
-  border-bottom:1px solid var(--topbar-border);
+  border:1px solid var(--topbar-border);
+  border-radius: 18px;
 }
 .topbar-inner{
   max-width:var(--max);
   margin:auto;
-  padding:12px 24px;
+  padding:12px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -133,7 +160,7 @@ section{ scroll-margin-top: 92px; }
 }
 .nav a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* Controls (theme always visible; hamburger only on mobile) */
+/* Controls */
 .controls{
   display:flex;
   align-items:center;
@@ -152,11 +179,9 @@ section{ scroll-margin-top: 92px; }
   cursor:pointer;
   transition:.2s ease;
   padding:0;
-  color: var(--icon); /* ✅ icons become black/white by theme */
+  color: var(--icon);
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
-
-/* Ensure any SVG inherits the button color */
 .icon-btn svg{ width:18px; height:18px; stroke: currentColor; }
 .icon-btn svg *{ stroke: currentColor; }
 
@@ -167,13 +192,18 @@ section{ scroll-margin-top: 92px; }
 .mobile-menu{
   display:none;
   position:fixed;
-  top:62px; /* below topbar */
-  left:0; right:0;
   z-index:49;
-  padding:12px 16px 16px;
+
+  /* ✅ also align to the shell */
+  top: calc(var(--page-pad) + 62px);
+  left: var(--page-pad);
+  right: var(--page-pad);
+
+  padding:12px 14px 14px;
   background:var(--topbar);
   backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--topbar-border);
+  border:1px solid var(--topbar-border);
+  border-radius: 18px;
 }
 .mobile-menu.open{ display:block; }
 
@@ -182,7 +212,7 @@ section{ scroll-margin-top: 92px; }
   margin:0 auto;
   display:grid;
   gap:10px;
-  padding:10px 8px 8px;
+  padding:6px 6px 8px;
 }
 .mobile-links a{
   font-size:14px;
@@ -458,7 +488,12 @@ html[data-theme="dark"] .work-thumb{
 
 /* ===================== MOBILE ===================== */
 @media(max-width:900px){
-  .container{ padding:86px 18px 70px; }
+  :root{
+    --page-pad:12px;
+    --content-pad:18px;
+  }
+
+  .container{ padding: calc(86px + var(--content-pad)) var(--content-pad) 70px; }
   .nav{ display:none; }
   #menuBtn{ display:grid; }
 
@@ -483,218 +518,235 @@ html[data-theme="dark"] .work-thumb{
 
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="brand">
-      <span class="dot"></span>
-      <span>Siddhant Yadav</span>
+<div class="page">
+  <div class="shell">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="dot"></span>
+          <span>Siddhant Yadav</span>
+        </div>
+
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#what">What I Do</a>
+          <a href="#process">How I Work</a>
+          <a href="#showcase">Work</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="controls" aria-label="Topbar controls">
+          <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
+            <span id="themeIcon" aria-hidden="true"></span>
+          </button>
+
+          <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="#what">What I Do</a>
-      <a href="#process">How I Work</a>
-      <a href="#showcase">Work</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <!-- Mobile dropdown menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-links" aria-label="Mobile navigation">
+        <a href="#what" data-close-menu>What I Do</a>
+        <a href="#process" data-close-menu>How I Work</a>
+        <a href="#showcase" data-close-menu>Work</a>
+        <a href="#about" data-close-menu>About</a>
+        <a href="#contact" data-close-menu>Contact</a>
+      </div>
+    </div>
 
-    <div class="controls" aria-label="Topbar controls">
-      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
-        <span id="themeIcon" aria-hidden="true"></span>
-      </button>
+    <div class="container">
 
-      <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-left">
+          <span class="badge fade">Available for Freelance</span>
+          <h1 class="fade">Minimal, usable UI design for SaaS & eCommerce products.</h1>
+          <p class="fade">
+            I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.
+          </p>
+          <div class="cta fade">
+            <a href="#contact" class="btn primary">Email Me</a>
+            <a href="#showcase" class="btn">View Work</a>
+            <a href="#process" class="btn">How I Work</a>
+            <a href="#about" class="btn">About</a>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="profile fade">
+            <img src="https://cdn2.f-cdn.com/ppic/239876269/logo/74203495/NvIz8/CROPPED_profile_logo_LinkedIn_74203495.jpg?image-optimizer=force&format=webply&width=560" alt="Siddhant Yadav">
+          </div>
+        </div>
+      </section>
+
+      <!-- WHAT I DO -->
+      <section id="what" class="section">
+        <h2 class="fade">What I Do</h2>
+        <p class="section-lead fade">
+          I focus on the parts of product design that directly improve usability, clarity, and business outcomes.
+        </p>
+        <div class="grid">
+          <div class="card fade">
+            <h3>SaaS UI/UX Design</h3>
+            <p>Dashboards, result pages, onboarding, and component systems with clean hierarchy.</p>
+          </div>
+          <div class="card fade">
+            <h3>eCommerce UX</h3>
+            <p>Product pages and checkout flows designed to reduce friction and increase conversions.</p>
+          </div>
+          <div class="card fade">
+            <h3>Design → Build Support</h3>
+            <p>Dev-ready layouts and CMS-friendly components for Shopify & WordPress.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW I WORK -->
+      <section id="process" class="section">
+        <h2 class="fade">How I Work</h2>
+        <p class="section-lead fade">
+          A simple process that keeps projects fast, structured, and easy to collaborate on.
+        </p>
+        <div class="grid">
+          <div class="step fade">
+            <div class="step-inner">
+              <div class="kicker">Step 1</div>
+              <h3>Audit & Goals</h3>
+              <p>We identify what’s unclear, what’s slowing users down, and what matters most for the business.</p>
+              <ul>
+                <li>Quick UX review + notes</li>
+                <li>Competitor references</li>
+                <li>Success metrics / target outcome</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step fade">
+            <div class="step-inner">
+              <div class="kicker">Step 2</div>
+              <h3>Structure & Flow</h3>
+              <p>I simplify the layout and user journey first — so the UI becomes easy to scan and easy to use.</p>
+              <ul>
+                <li>Wireframe / flow map</li>
+                <li>Content + hierarchy</li>
+                <li>Interaction notes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="step fade">
+            <div class="step-inner">
+              <div class="kicker">Step 3</div>
+              <h3>UI + Handoff</h3>
+              <p>Final UI with clean components, plus dev-friendly handoff so implementation stays smooth.</p>
+              <ul>
+                <li>Polished UI screens</li>
+                <li>Components / tokens</li>
+                <li>Specs + ready-to-build guidance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORK SHOWCASE -->
+      <section id="showcase" class="section">
+        <h2 class="fade">Work Showcase</h2>
+        <p class="section-lead fade">
+          A few UI screens and redesigns — focused on clarity, hierarchy, and usability.
+        </p>
+        <div class="work-grid">
+          <article class="work-card fade">
+            <div class="work-thumb">
+              <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/1.png" alt="SaaS Results Page UI">
+            </div>
+            <div class="work-body">
+              <h3>SaaS Results Page</h3>
+              <p>Clear pass/fail states with readable metrics and strong hierarchy.</p>
+            </div>
+          </article>
+
+          <article class="work-card fade">
+            <div class="work-thumb">
+              <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/2.png" alt="eCommerce Checkout UI">
+            </div>
+            <div class="work-body">
+              <h3>eCommerce Checkout</h3>
+              <p>Simplified checkout to reduce friction and increase trust.</p>
+            </div>
+          </article>
+
+          <article class="work-card fade">
+            <div class="work-thumb">
+              <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/3.png" alt="Dashboard UI">
+            </div>
+            <div class="work-body">
+              <h3>Dashboard UI</h3>
+              <p>Improved scanability and layout structure for analytics dashboards.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="section">
+        <h2 class="fade">About Me</h2>
+        <p class="section-lead fade">
+          A designer with a computer science background — focused on UI that looks good and works in real builds.
+        </p>
+        <div class="about-wrap">
+          <div class="about fade">
+            <p>
+              I’m <strong>Siddhant Yadav</strong>, a UI/UX & Web Designer focused on SaaS and eCommerce.
+              My work is centered on <strong>clarity</strong>, <strong>clean systems</strong>, and <strong>build-ready UI</strong>.
+            </p>
+            <br />
+            <p>
+              I completed my <strong>Bachelor’s in Computer Science</strong> from the <strong>University of Wolverhampton</strong>.
+              That background helps me design interfaces that developers can implement smoothly — with practical spacing,
+              reusable components, and consistent rules.
+            </p>
+          </div>
+
+          <div class="facts">
+            <div class="fact fade">
+              <b>Education</b>
+              <span>BSc Computer Science — University of Wolverhampton</span>
+            </div>
+            <div class="fact fade">
+              <b>Focus</b>
+              <span>SaaS dashboards • eCommerce UX • Design systems</span>
+            </div>
+            <div class="fact fade">
+              <b>Tools</b>
+              <span>Figma • Webflow • Shopify • WordPress</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <section id="contact" class="footer">
+        <h2 class="fade">Let’s work together</h2>
+        <p class="fade">Available for redesigns, UI improvements, and ongoing product design work.</p>
+        <div class="cta fade" style="justify-content:center;">
+          <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
+          <a href="https://www.freelancer.com/u/siddhant84" class="btn" target="_blank" rel="noreferrer">Freelancer Profile</a>
+        </div>
+      </section>
+
     </div>
   </div>
-</div>
-
-<!-- Mobile dropdown menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-links" aria-label="Mobile navigation">
-    <a href="#what" data-close-menu>What I Do</a>
-    <a href="#process" data-close-menu>How I Work</a>
-    <a href="#showcase" data-close-menu>Work</a>
-    <a href="#about" data-close-menu>About</a>
-    <a href="#contact" data-close-menu>Contact</a>
-  </div>
-</div>
-
-<div class="container">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <span class="badge fade">Available for Freelance</span>
-      <h1 class="fade">Minimal, usable UI design for SaaS & eCommerce products.</h1>
-      <p class="fade">I design calm interfaces that improve clarity and conversion — with systems that developers can build easily.</p>
-      <div class="cta fade">
-        <a href="#contact" class="btn primary">Email Me</a>
-        <a href="#showcase" class="btn">View Work</a>
-        <a href="#process" class="btn">How I Work</a>
-        <a href="#about" class="btn">About</a>
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <div class="profile fade">
-        <img src="https://cdn2.f-cdn.com/ppic/239876269/logo/74203495/NvIz8/CROPPED_profile_logo_LinkedIn_74203495.jpg?image-optimizer=force&format=webply&width=560" alt="Siddhant Yadav">
-      </div>
-    </div>
-  </section>
-
-  <!-- WHAT I DO -->
-  <section id="what" class="section">
-    <h2 class="fade">What I Do</h2>
-    <p class="section-lead fade">I focus on the parts of product design that directly improve usability, clarity, and business outcomes.</p>
-    <div class="grid">
-      <div class="card fade">
-        <h3>SaaS UI/UX Design</h3>
-        <p>Dashboards, result pages, onboarding, and component systems with clean hierarchy.</p>
-      </div>
-      <div class="card fade">
-        <h3>eCommerce UX</h3>
-        <p>Product pages and checkout flows designed to reduce friction and increase conversions.</p>
-      </div>
-      <div class="card fade">
-        <h3>Design → Build Support</h3>
-        <p>Dev-ready layouts and CMS-friendly components for Shopify & WordPress.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW I WORK -->
-  <section id="process" class="section">
-    <h2 class="fade">How I Work</h2>
-    <p class="section-lead fade">A simple process that keeps projects fast, structured, and easy to collaborate on.</p>
-    <div class="grid">
-      <div class="step fade">
-        <div class="step-inner">
-          <div class="kicker">Step 1</div>
-          <h3>Audit & Goals</h3>
-          <p>We identify what’s unclear, what’s slowing users down, and what matters most for the business.</p>
-          <ul>
-            <li>Quick UX review + notes</li>
-            <li>Competitor references</li>
-            <li>Success metrics / target outcome</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="step fade">
-        <div class="step-inner">
-          <div class="kicker">Step 2</div>
-          <h3>Structure & Flow</h3>
-          <p>I simplify the layout and user journey first — so the UI becomes easy to scan and easy to use.</p>
-          <ul>
-            <li>Wireframe / flow map</li>
-            <li>Content + hierarchy</li>
-            <li>Interaction notes</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="step fade">
-        <div class="step-inner">
-          <div class="kicker">Step 3</div>
-          <h3>UI + Handoff</h3>
-          <p>Final UI with clean components, plus dev-friendly handoff so implementation stays smooth.</p>
-          <ul>
-            <li>Polished UI screens</li>
-            <li>Components / tokens</li>
-            <li>Specs + ready-to-build guidance</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK SHOWCASE -->
-  <section id="showcase" class="section">
-    <h2 class="fade">Work Showcase</h2>
-    <p class="section-lead fade">A few UI screens and redesigns — focused on clarity, hierarchy, and usability.</p>
-    <div class="work-grid">
-      <article class="work-card fade">
-        <div class="work-thumb">
-          <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/1.png" alt="SaaS Results Page UI">
-        </div>
-        <div class="work-body">
-          <h3>SaaS Results Page</h3>
-          <p>Clear pass/fail states with readable metrics and strong hierarchy.</p>
-        </div>
-      </article>
-
-      <article class="work-card fade">
-        <div class="work-thumb">
-          <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/2.png" alt="eCommerce Checkout UI">
-        </div>
-        <div class="work-body">
-          <h3>eCommerce Checkout</h3>
-          <p>Simplified checkout to reduce friction and increase trust.</p>
-        </div>
-      </article>
-
-      <article class="work-card fade">
-        <div class="work-thumb">
-          <img src="https://raw.githubusercontent.com/siddhantysdv/portfolio/refs/heads/main/3.png" alt="Dashboard UI">
-        </div>
-        <div class="work-body">
-          <h3>Dashboard UI</h3>
-          <p>Improved scanability and layout structure for analytics dashboards.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <h2 class="fade">About Me</h2>
-    <p class="section-lead fade">A designer with a computer science background — focused on UI that looks good and works in real builds.</p>
-    <div class="about-wrap">
-      <div class="about fade">
-        <p>
-          I’m <strong>Siddhant Yadav</strong>, a UI/UX & Web Designer focused on SaaS and eCommerce.
-          My work is centered on <strong>clarity</strong>, <strong>clean systems</strong>, and <strong>build-ready UI</strong>.
-        </p>
-        <br />
-        <p>
-          I completed my <strong>Bachelor’s in Computer Science</strong> from the <strong>University of Wolverhampton</strong>.
-          That background helps me design interfaces that developers can implement smoothly — with practical spacing,
-          reusable components, and consistent rules.
-        </p>
-      </div>
-
-      <div class="facts">
-        <div class="fact fade">
-          <b>Education</b>
-          <span>BSc Computer Science — University of Wolverhampton</span>
-        </div>
-        <div class="fact fade">
-          <b>Focus</b>
-          <span>SaaS dashboards • eCommerce UX • Design systems</span>
-        </div>
-        <div class="fact fade">
-          <b>Tools</b>
-          <span>Figma • Webflow • Shopify • WordPress</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <section id="contact" class="footer">
-    <h2 class="fade">Let’s work together</h2>
-    <p class="fade">Available for redesigns, UI improvements, and ongoing product design work.</p>
-    <div class="cta fade" style="justify-content:center;">
-      <a href="mailto:siddhantyadav820@gmail.com" class="btn primary">Email Me</a>
-      <a href="https://www.freelancer.com/u/siddhant84" class="btn" target="_blank" rel="noreferrer">Freelancer Profile</a>
-    </div>
-  </section>
 </div>
 
 <script>
