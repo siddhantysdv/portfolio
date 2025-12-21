@@ -19,7 +19,6 @@
 
   --shadow:0 16px 42px rgba(15,20,30,.12);
   --radius:20px;
-  --max:1400px;
 
   --topbar:rgba(247,248,251,.72);
   --focus: rgba(10,163,132,.35);
@@ -28,8 +27,8 @@
   --icon:#000;
 
   /* fullscreen layout */
-  --page-pad:16px;       /* outer margin around whole page */
-  --content-pad:24px;    /* inner padding in shell */
+  --page-pad:16px;        /* outer margin around whole page */
+  --content-pad:24px;     /* inner padding for BOTH topbar + sections */
 }
 
 /* 🌙 DARK MODE */
@@ -62,8 +61,6 @@ body{
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:12px}
-
-/* Better anchor spacing below fixed topbar */
 section{ scroll-margin-top: 96px; }
 
 /* ===================== FULLSCREEN PAGE SHELL (NO BORDERS) ===================== */
@@ -82,22 +79,23 @@ section{ scroll-margin-top: 96px; }
   overflow:hidden;
 }
 
-/* ===================== TOP BAR (LAYOUT FIXED) ===================== */
+/* ===================== TOP BAR (FULL WIDTH LIKE YOU WANT) ===================== */
 .topbar{
   position:fixed;
   z-index:50;
   top: 0;
   left: 0;
   right:0;
-
   backdrop-filter:blur(14px);
   background:var(--topbar);
-  border-radius:18px; /* ✅ no border, only radius */
+  border-radius:18px; /* no border */
 }
 .topbar-inner{
-  max-width:var(--max);
-  margin:auto;
-  padding:12px 18px;
+  /* ✅ Make it full width like the topbar background */
+  width:100%;
+  max-width:none;
+  padding:12px var(--content-pad);
+
   display:flex;
   align-items:center;
   gap:16px;
@@ -121,14 +119,14 @@ section{ scroll-margin-top: 96px; }
 .nav-wrap{
   flex:1;
   display:flex;
-  justify-content:center; /* ✅ nav centered */
+  justify-content:center;
 }
 
 /* nav links as a centered group */
 .nav{
   display:flex;
   align-items:center;
-  gap:10px;              /* ✅ clean spacing */
+  gap:10px;
 }
 .nav a{
   font-size:13px;
@@ -142,7 +140,7 @@ section{ scroll-margin-top: 96px; }
 
 /* RIGHT: controls (always far right) */
 .controls{
-  margin-left:auto;       /* ✅ ensures right alignment */
+  margin-left:auto;
   display:flex;
   align-items:center;
   gap:10px;
@@ -157,8 +155,8 @@ section{ scroll-margin-top: 96px; }
   cursor:pointer;
   transition:.2s ease;
   padding:0;
-  border:none;            /* ✅ no border */
-  color: var(--icon);     /* ✅ black in light, white in dark */
+  border:none;
+  color: var(--icon);
 }
 .icon-btn:hover{ background:var(--panel2); transform:translateY(-1px); }
 .icon-btn svg{ width:18px; height:18px; stroke: currentColor; }
@@ -180,11 +178,10 @@ section{ scroll-margin-top: 96px; }
   padding:12px 14px 14px;
   background:var(--topbar);
   backdrop-filter:blur(14px);
-  border-radius:18px; /* ✅ no border */
+  border-radius:18px;
 }
 .mobile-menu.open{ display:block; }
 .mobile-links{
-  max-width:var(--max);
   margin:0 auto;
   display:grid;
   gap:10px;
@@ -199,10 +196,13 @@ section{ scroll-margin-top: 96px; }
 }
 .mobile-links a:hover{ background:var(--panel2); transform:translateY(-1px); }
 
-/* ===================== CONTENT WRAP ===================== */
+/* ===================== CONTENT WRAP (✅ FULL WIDTH LIKE TOPBAR) ===================== */
 .container{
-  max-width:var(--max);
-  margin:auto;
+  /* ✅ Make sections full width like the topbar (no max-width constraint) */
+  width:100%;
+  max-width:none;
+
+  /* ✅ Same left/right padding as topbar-inner so everything aligns */
   padding: calc(92px + var(--content-pad)) var(--content-pad) 80px;
 }
 
@@ -224,9 +224,7 @@ section{ scroll-margin-top: 96px; }
   color:var(--accent);
   width:fit-content;
 }
-html[data-theme="dark"] .badge{
-  background:rgba(142,234,208,.10);
-}
+html[data-theme="dark"] .badge{ background:rgba(142,234,208,.10); }
 
 .hero h1{
   font-size:clamp(34px,5vw,54px);
@@ -237,7 +235,7 @@ html[data-theme="dark"] .badge{
 .hero p{
   font-size:18px;
   color:var(--muted);
-  max-width:640px;
+  max-width:740px;
 }
 .cta{
   display:flex;
@@ -253,7 +251,7 @@ html[data-theme="dark"] .badge{
   transition:.2s ease;
   user-select:none;
   white-space:nowrap;
-  border:none; /* ✅ no border */
+  border:none;
 }
 .btn.primary{
   background:var(--accent);
@@ -286,7 +284,7 @@ html[data-theme="dark"] .badge{
 .section-lead{
   color:var(--muted);
   margin-bottom:22px;
-  max-width:780px;
+  max-width:860px;
   font-size:16px;
 }
 
@@ -306,7 +304,7 @@ html[data-theme="dark"] .badge{
   border-radius:var(--radius);
   padding:20px;
   transition:.25s ease;
-  border:none; /* ✅ no border */
+  border:none;
 }
 .card:hover{
   transform:translateY(-6px);
@@ -326,7 +324,7 @@ html[data-theme="dark"] .badge{
   background:var(--panel);
   border-radius:var(--radius);
   padding:20px;
-  border:none; /* ✅ no border */
+  border:none;
 }
 .step::before{
   content:"";
@@ -376,7 +374,7 @@ html[data-theme="dark"] .kicker{ color: rgba(238,241,246,.75); }
   border-radius:var(--radius);
   overflow:hidden;
   transition:.25s ease;
-  border:none; /* ✅ no border */
+  border:none;
 }
 .work-card:hover{ transform:translateY(-6px); background:var(--panel2); }
 
@@ -400,14 +398,8 @@ html[data-theme="dark"] .work-thumb{
   transition: transform .35s ease;
 }
 .work-card:hover .work-thumb img{ transform:scale(1.03); }
-.work-body{
-  padding:16px 18px 18px;
-}
-.work-body h3{
-  font-size:16px;
-  font-weight:800;
-  margin-bottom:6px;
-}
+.work-body{ padding:16px 18px 18px; }
+.work-body h3{ font-size:16px; font-weight:800; margin-bottom:6px; }
 .work-body p{ color:var(--muted); font-size:14px; }
 
 /* ===================== ABOUT ===================== */
@@ -426,37 +418,26 @@ html[data-theme="dark"] .work-thumb{
   padding:20px;
   color:var(--muted);
   font-size:15.5px;
-  border:none; /* ✅ no border */
+  border:none;
 }
 .about strong{ color:var(--text); font-weight:850; }
-
-.facts{
-  display:grid;
-  gap:12px;
-}
+.facts{ display:grid; gap:12px; }
 .fact{
   background:var(--panel);
   border-radius:var(--radius);
   padding:16px;
-  border:none; /* ✅ no border */
+  border:none;
 }
 .fact b{ display:block; font-size:13px; margin-bottom:6px; font-weight:800; }
 .fact span{ color:var(--muted); font-size:14px; }
 
 /* ===================== FOOTER / CONTACT ===================== */
-.footer{
-  text-align:center;
-  padding-top:70px;
-}
+.footer{ text-align:center; padding-top:70px; }
 .footer h2{ font-size:28px; font-weight:900; margin-bottom:10px; }
 .footer p{ color:var(--muted); margin-bottom:20px; font-size:15px; }
 
 /* ===================== REVEAL ===================== */
-.fade{
-  opacity:0;
-  transform:translateY(20px);
-  transition: 900ms ease;
-}
+.fade{ opacity:0; transform:translateY(20px); transition: 900ms ease; }
 .fade.show{ opacity:1; transform:translateY(0); }
 
 /* ===================== MOBILE ===================== */
@@ -466,16 +447,10 @@ html[data-theme="dark"] .work-thumb{
     --content-pad:18px;
   }
 
-  /* ✅ hide centered nav on mobile */
   .nav-wrap{ display:none; }
-
-  /* ✅ show hamburger only on mobile */
   #menuBtn{ display:grid; }
 
-  /* ✅ keep brand left & controls right */
-  .topbar-inner{
-    justify-content:space-between;
-  }
+  .topbar-inner{ justify-content:space-between; }
 
   .container{ padding: calc(90px + var(--content-pad)) var(--content-pad) 70px; }
 
@@ -525,12 +500,10 @@ html[data-theme="dark"] .work-thumb{
 
         <!-- RIGHT -->
         <div class="controls" aria-label="Topbar controls">
-          <!-- Theme (always visible) -->
           <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme">
             <span id="themeIcon" aria-hidden="true"></span>
           </button>
 
-          <!-- Hamburger (mobile only; appears to the right of theme) -->
           <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" title="Menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -754,31 +727,23 @@ html[data-theme="dark"] .work-thumb{
   }, { threshold: 0.15 });
   els.forEach(el => io.observe(el));
 
-  // ===== Theme toggle (icon + persist) =====
+  // Theme toggle (icon + persist)
   const themeBtn = document.getElementById("themeBtn");
   const themeIcon = document.getElementById("themeIcon");
   const savedTheme = localStorage.getItem("theme");
-
-  if (savedTheme === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
-  }
+  if (savedTheme === "dark") document.documentElement.setAttribute("data-theme", "dark");
 
   function sunIcon(){
     return `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2"></path>
-        <path d="M12 20v2"></path>
-        <path d="M4.93 4.93l1.41 1.41"></path>
-        <path d="M17.66 17.66l1.41 1.41"></path>
-        <path d="M2 12h2"></path>
-        <path d="M20 12h2"></path>
-        <path d="M4.93 19.07l1.41-1.41"></path>
-        <path d="M17.66 6.34l1.41-1.41"></path>
+        <path d="M12 2v2"></path><path d="M12 20v2"></path>
+        <path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path>
+        <path d="M2 12h2"></path><path d="M20 12h2"></path>
+        <path d="M4.93 19.07l1.41-1.41"></path><path d="M17.66 6.34l1.41-1.41"></path>
       </svg>
     `;
   }
-
   function moonIcon(){
     return `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -786,12 +751,10 @@ html[data-theme="dark"] .work-thumb{
       </svg>
     `;
   }
-
   function setThemeIcon(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     themeIcon.innerHTML = isDark ? moonIcon() : sunIcon();
   }
-
   function toggleTheme(){
     const isDark = document.documentElement.getAttribute("data-theme") === "dark";
     if (isDark) {
@@ -803,45 +766,28 @@ html[data-theme="dark"] .work-thumb{
     }
     setThemeIcon();
   }
-
   themeBtn.addEventListener("click", toggleTheme);
   setThemeIcon();
 
-  // ===== Mobile hamburger menu =====
+  // Mobile hamburger menu
   const menuBtn = document.getElementById("menuBtn");
   const mobileMenu = document.getElementById("mobileMenu");
 
   function closeMenu(){
     mobileMenu.classList.remove("open");
     menuBtn.setAttribute("aria-expanded", "false");
-    menuBtn.setAttribute("aria-label", "Open menu");
   }
-
   function openMenu(){
     mobileMenu.classList.add("open");
     menuBtn.setAttribute("aria-expanded", "true");
-    menuBtn.setAttribute("aria-label", "Close menu");
   }
-
   menuBtn.addEventListener("click", () => {
     const isOpen = mobileMenu.classList.contains("open");
     isOpen ? closeMenu() : openMenu();
   });
-
-  // Close menu when clicking a link
-  document.querySelectorAll("[data-close-menu]").forEach(a => {
-    a.addEventListener("click", closeMenu);
-  });
-
-  // Close on Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeMenu();
-  });
-
-  // Close if resized to desktop
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 900) closeMenu();
-  });
+  document.querySelectorAll("[data-close-menu]").forEach(a => a.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
+  window.addEventListener("resize", () => { if (window.innerWidth > 900) closeMenu(); });
 </script>
 
 </body>
